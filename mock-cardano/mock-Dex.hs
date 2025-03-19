@@ -18,7 +18,7 @@ data Pool = Pool
   , tokenB :: Token
   , reserveA :: Amount
   , reserveB :: Amount
-  } deriving (Show)
+  } deriving (Show, Eq) -- Derive Eq for Pool
 
 -- DEX State
 data DEX = DEX
