@@ -63,30 +63,26 @@ swapTokens dex user fromToken toToken amount =
   in if fromBalance < amount
      then Left "Insufficient balance"
      else
-       case findPool dex fromToken toToken of
-         Nothing -> Left "No pool found for the token pair"
-         Just pool ->
-           let k = reserveA pool * reserveB pool -- Constant product
-               updatedReserveA = reserveA pool + amount
-               updatedReserveB = k / updatedReserveA
-               outputAmount = reserveB pool - updatedReserveB
-               updatedPool = pool { reserveA = updatedReserveA, reserveB = updatedReserveB }
-               updatedPools = map (\p -> if p == pool then updatedPool else p) (pools dex)
-               updatedUserBalance = Map.insert fromToken (fromBalance - amount) $
-                                    Map.insert toToken (Map.findWithDefault 0 toToken userBalance + outputAmount) userBalance
-               updatedUserBalances = Map.insert user updatedUserBalance (userBalances dex)
-           in Right $ dex
-                { pools = updatedPools
-                , userBalances = updatedUserBalances
-                }
-
--- Helper function to find a pool for a token pair
-findPool :: DEX -> Token -> Token -> Maybe Pool
-findPool dex tokenA tokenB =
-  let matchingPools = filter (\pool ->
-        (tokenA == tokenA pool && tokenB == tokenB pool) ||
-        (tokenA == tokenB pool && tokenB == tokenA pool)) (pools dex)
-  in if null matchingPools then Nothing else Just (head matchingPools)
+       let matchingPools = filter (\pool ->
+             (fromToken == tokenA pool && toToken == tokenB pool) ||
+             (fromToken == tokenB pool && toToken == tokenA pool)) (pools dex)
+       in if null matchingPools
+          then Left "No pool found for the token pair"
+          else
+            let pool = head matchingPools
+                k = reserveA pool * reserveB pool -- Constant product
+                updatedReserveA = reserveA pool + amount
+                updatedReserveB = k / updatedReserveA
+                outputAmount = reserveB pool - updatedReserveB
+                updatedPool = pool { reserveA = updatedReserveA, reserveB = updatedReserveB }
+                updatedPools = map (\p -> if p == pool then updatedPool else p) (pools dex)
+                updatedUserBalance = Map.insert fromToken (fromBalance - amount) $
+                                     Map.insert toToken (Map.findWithDefault 0 toToken userBalance + outputAmount) userBalance
+                updatedUserBalances = Map.insert user updatedUserBalance (userBalances dex)
+            in Right $ dex
+                 { pools = updatedPools
+                 , userBalances = updatedUserBalances
+                 }
 
 -- Get user balance
 getUserBalance :: DEX -> String -> Either String UserBalances
