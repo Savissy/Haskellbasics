@@ -6,6 +6,8 @@ import qualified Data.Map as Map
 import Text.Parsec
 import Text.Parsec.String (Parser)
 import Control.Monad (void)
+import Text.Parsec.Char (char, string, letter, alphaNum, spaces, digit)
+import Text.Parsec.Combinator (many1, chainl1, between)
 
 -- Abstract Syntax Tree (AST)
 data Stmt = Assign String Expr
