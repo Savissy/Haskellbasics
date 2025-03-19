@@ -3,14 +3,14 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module MockCardano where
+module Main where
 
 import Data.Time.Clock (UTCTime, getCurrentTime)
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.ByteString (ByteString)
 import qualified Data.ByteString.Char8 as BS
-import Crypto.Hash.SHA256 (hash)
+import Crypto.Hash.SHA256 (hash)  -- Requires cryptohash-sha256 package
 import Control.Monad (replicateM)
 import System.Random (randomRIO)
 import GHC.Generics (Generic)
@@ -87,17 +87,27 @@ data FT = FT
 instance ToJSON FT
 instance FromJSON FT
 
+-- Genesis block
+genesisBlock :: Block
+genesisBlock = Block
+  { blockSlot = 0
+  , blockTransactions = []
+  , blockPrevHash = BS.pack "genesis"
+  , blockStakePool = "GenesisPool"
+  , blockTimestamp = undefined  -- Placeholder, not used
+  }
+
 -- Initial blockchain state
 initialBlockchain :: Blockchain
 initialBlockchain = Blockchain
-  { chainBlocks = []
-  , chainStakePools = Map.empty
-  , chainBalances = Map.empty
+  { chainBlocks = [genesisBlock]
+  , chainStakePools = Map.fromList [("Pool1", 100), ("Pool2", 200)]
+  , chainBalances = Map.fromList [("Alice", 1000), ("Bob", 500)]
   }
 
 -- Hash a block
 hashBlock :: Block -> BlockHash
-hashBlock = hash . BS.pack . show
+hashBlock block = hash (BS.pack (show block))
 
 -- Add a new block to the blockchain
 addBlock :: Blockchain -> Block -> Blockchain
