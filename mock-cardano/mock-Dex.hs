@@ -1,7 +1,9 @@
 -- Saviour Uzoukwu
 -- 17th March 2025
+{-# LANGUAGE OverloadedStrings #-}
 import Data.Map (Map)
 import qualified Data.Map as Map
+import Control.Monad (when)
 
 -- Token Definition
 type Token = String
@@ -28,9 +30,10 @@ data DEX = DEX
 initialDEX :: DEX
 initialDEX = DEX
   { pools = []
-  , userBalances = Map.fromList [("Alice", Map.fromList [("ETH", 1000), ("DAI", 2000)])
-                               , ("Bob", Map.fromList [("ETH", 500), ("DAI", 1000)])
-                               ]
+  , userBalances = Map.fromList
+      [ ("Alice", Map.fromList [("ETH", 1000), ("DAI", 2000)])
+      , ("Bob", Map.fromList [("ETH", 500), ("DAI", 1000)])
+      ]
   }
 
 -- Add liquidity to a pool
@@ -52,42 +55,37 @@ addLiquidity dex user tokenA tokenB amountA amountB =
             }
      else Left "Insufficient balance"
 
--- Swap tokens
+-- Swap tokens using constant product formula
 swapTokens :: DEX -> String -> Token -> Token -> Amount -> Either String DEX
 swapTokens dex user fromToken toToken amount =
   let userBalance = Map.findWithDefault Map.empty user (userBalances dex)
       fromBalance = Map.findWithDefault 0 fromToken userBalance
-  in if fromBalance >= amount
-     then
+  in if fromBalance < amount
+     then Left "Insufficient balance"
+     else
        case findPool dex fromToken toToken of
-         Just pool ->
-           if reserveA pool == 0 || reserveB pool == 0
-           then Left "Pool reserves are zero"
-           else
-             let outputAmount = (reserveB pool * amount) / (reserveA pool + amount)
-                 updatedReserveA = reserveA pool + amount
-                 updatedReserveB = reserveB pool - outputAmount
-                 updatedPool = pool { reserveA = updatedReserveA, reserveB = updatedReserveB }
-                 updatedPools = map (\p -> if p == pool then updatedPool else p) (pools dex)
-                 updatedUserBalance = Map.insert fromToken (fromBalance - amount) $
-                                      Map.insert toToken (Map.findWithDefault 0 toToken userBalance + outputAmount) userBalance
-                 updatedUserBalances = Map.insert user updatedUserBalance (userBalances dex)
-             in Right $ dex
-                  { pools = updatedPools
-                  , userBalances = updatedUserBalances
-                  }
          Nothing -> Left "No pool found for the token pair"
-     else Left "Insufficient balance"
+         Just pool ->
+           let k = reserveA pool * reserveB pool -- Constant product
+               updatedReserveA = reserveA pool + amount
+               updatedReserveB = k / updatedReserveA
+               outputAmount = reserveB pool - updatedReserveB
+               updatedPool = pool { reserveA = updatedReserveA, reserveB = updatedReserveB }
+               updatedPools = map (\p -> if p == pool then updatedPool else p) (pools dex)
+               updatedUserBalance = Map.insert fromToken (fromBalance - amount) $
+                                    Map.insert toToken (Map.findWithDefault 0 toToken userBalance + outputAmount) userBalance
+               updatedUserBalances = Map.insert user updatedUserBalance (userBalances dex)
+           in Right $ dex
+                { pools = updatedPools
+                , userBalances = updatedUserBalances
+                }
 
--- Helper function to check if a pool matches the token pair
-matchesPool :: Token -> Token -> Pool -> Bool
-matchesPool tokenA tokenB pool =
-  (tokenA == tokenA pool && tokenB == tokenB pool) || (tokenA == tokenB pool && tokenB == tokenA pool)
-
--- Find a pool for a token pair
+-- Helper function to find a pool for a token pair
 findPool :: DEX -> Token -> Token -> Maybe Pool
 findPool dex tokenA tokenB =
-  let matchingPools = filter (matchesPool tokenA tokenB) (pools dex)
+  let matchingPools = filter (\pool ->
+        (tokenA == tokenA pool && tokenB == tokenB pool) ||
+        (tokenA == tokenB pool && tokenB == tokenA pool)) (pools dex)
   in if null matchingPools then Nothing else Just (head matchingPools)
 
 -- Get user balance
@@ -101,11 +99,14 @@ getUserBalance dex user =
 main :: IO ()
 main = do
   let dex = initialDEX
-  -- Add liquidity
+
+  -- Alice adds liquidity to the ETH-DAI pool
   let Right dex1 = addLiquidity dex "Alice" "ETH" "DAI" 100 1000
-  -- Swap tokens
+
+  -- Bob swaps 10 ETH for DAI
   let Right dex2 = swapTokens dex1 "Bob" "ETH" "DAI" 10
-  -- Get Bob's balance
+
+  -- Check Bob's balance after the swap
   case getUserBalance dex2 "Bob" of
-    Right balance -> print balance
+    Right balance -> print $ "Bob's balance: " ++ show balance
     Left err -> putStrLn err
