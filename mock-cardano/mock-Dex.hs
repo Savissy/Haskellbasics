@@ -61,18 +61,21 @@ swapTokens dex user fromToken toToken amount =
      then
        case findPool dex fromToken toToken of
          Just pool ->
-           let outputAmount = (reserveB pool * amount) / (reserveA pool + amount)
-               updatedReserveA = reserveA pool + amount
-               updatedReserveB = reserveB pool - outputAmount
-               updatedPool = pool { reserveA = updatedReserveA, reserveB = updatedReserveB }
-               updatedPools = map (\p -> if p == pool then updatedPool else p) (pools dex)
-               updatedUserBalance = Map.insert fromToken (fromBalance - amount) $
-                                    Map.insert toToken (Map.findWithDefault 0 toToken userBalance + outputAmount) userBalance
-               updatedUserBalances = Map.insert user updatedUserBalance (userBalances dex)
-           in Right $ dex
-                { pools = updatedPools
-                , userBalances = updatedUserBalances
-                }
+           if reserveA pool == 0 || reserveB pool == 0
+           then Left "Pool reserves are zero"
+           else
+             let outputAmount = (reserveB pool * amount) / (reserveA pool + amount)
+                 updatedReserveA = reserveA pool + amount
+                 updatedReserveB = reserveB pool - outputAmount
+                 updatedPool = pool { reserveA = updatedReserveA, reserveB = updatedReserveB }
+                 updatedPools = map (\p -> if p == pool then updatedPool else p) (pools dex)
+                 updatedUserBalance = Map.insert fromToken (fromBalance - amount) $
+                                      Map.insert toToken (Map.findWithDefault 0 toToken userBalance + outputAmount) userBalance
+                 updatedUserBalances = Map.insert user updatedUserBalance (userBalances dex)
+             in Right $ dex
+                  { pools = updatedPools
+                  , userBalances = updatedUserBalances
+                  }
          Nothing -> Left "No pool found for the token pair"
      else Left "Insufficient balance"
 
