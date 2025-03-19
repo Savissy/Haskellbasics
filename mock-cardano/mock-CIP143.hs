@@ -68,7 +68,7 @@ transferTokens blockchain fromUser toUser policyId name amount =
       fromBalance = Map.findWithDefault Map.empty fromUser (userBalances blockchain)
       toBalance = Map.findWithDefault Map.empty toUser (userBalances blockchain)
       token = Token name policyId amount
-  in case (Map.lookup tokenKey (tokens blockchain), Map.lookup token fromBalance of
+  in case (Map.lookup tokenKey (tokens blockchain), Map.lookup token fromBalance) of
        (Just _, Just fromAmount) ->
          if fromAmount >= amount
          then
