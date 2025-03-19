@@ -76,10 +76,15 @@ swapTokens dex user fromToken toToken amount =
          Nothing -> Left "No pool found for the token pair"
      else Left "Insufficient balance"
 
+-- Helper function to check if a pool matches the token pair
+matchesPool :: Token -> Token -> Pool -> Bool
+matchesPool tokenA tokenB pool =
+  (tokenA == tokenA pool && tokenB == tokenB pool) || (tokenA == tokenB pool && tokenB == tokenA pool)
+
 -- Find a pool for a token pair
 findPool :: DEX -> Token -> Token -> Maybe Pool
 findPool dex tokenA tokenB =
-  let matchingPools = filter (\p -> (tokenA == tokenA p && tokenB == tokenB p) || (tokenA == tokenB p && tokenB == tokenA p)) (pools dex)
+  let matchingPools = filter (matchesPool tokenA tokenB) (pools dex)
   in if null matchingPools then Nothing else Just (head matchingPools)
 
 -- Get user balance
