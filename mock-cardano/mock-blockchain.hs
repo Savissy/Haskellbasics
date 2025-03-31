@@ -1,21 +1,14 @@
 -- Saviour Uzoukwu
 -- 17th March 2025
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE OverloadedStrings #-}
-
 module Main where
 
-import Data.Time.Clock (UTCTime, getCurrentTime)
+import Data.List (find)
 import Data.Map (Map)
 import qualified Data.Map as Map
+import System.Random (randomRIO)
+import Data.Time.Clock (UTCTime, getCurrentTime)
 import Data.ByteString (ByteString)
 import qualified Data.ByteString.Char8 as BS
-import Crypto.Hash.SHA256 (hash)  -- Requires cryptohash-sha256 package
-import Control.Monad (replicateM)
-import System.Random (randomRIO)
-import GHC.Generics (Generic)
-import Data.Aeson (ToJSON, FromJSON, encode, decode)
-import Data.List (find)
 
 -- Define types
 type Address = String
@@ -32,10 +25,7 @@ data Transaction = Transaction
   , txAmount :: Balance
   , txFee :: Balance
   , txTimestamp :: UTCTime
-  } deriving (Show, Generic)
-
-instance ToJSON Transaction
-instance FromJSON Transaction
+  } deriving (Show)
 
 -- Block structure
 data Block = Block
@@ -44,57 +34,27 @@ data Block = Block
   , blockPrevHash :: BlockHash
   , blockStakePool :: Address
   , blockTimestamp :: UTCTime
-  } deriving (Show, Generic)
-
-instance ToJSON Block
-instance FromJSON Block
+  } deriving (Show)
 
 -- Blockchain structure
 data Blockchain = Blockchain
   { chainBlocks :: [Block]
   , chainStakePools :: Map Address Stake
   , chainBalances :: Map Address Balance
-  } deriving (Show, Generic)
+  } deriving (Show)
 
-instance ToJSON Blockchain
-instance FromJSON Blockchain
-
--- Smart Contract structure
-data SmartContract = SmartContract
-  { scAddress :: Address
-  , scCode :: String
-  } deriving (Show, Generic)
-
-instance ToJSON SmartContract
-instance FromJSON SmartContract
-
--- NFT structure
-data NFT = NFT
-  { nftId :: String
-  , nftOwner :: Address
-  } deriving (Show, Generic)
-
-instance ToJSON NFT
-instance FromJSON NFT
-
--- FT structure
-data FT = FT
-  { ftId :: String
-  , ftOwner :: Address
-  , ftAmount :: Balance
-  } deriving (Show, Generic)
-
-instance ToJSON FT
-instance FromJSON FT
+-- Simple hash function (for demonstration only - not cryptographically secure)
+simpleHash :: String -> BlockHash
+simpleHash = BS.pack . show . foldl (\acc c -> acc * 31 + fromEnum c) 0
 
 -- Genesis block
 genesisBlock :: Block
 genesisBlock = Block
   { blockSlot = 0
   , blockTransactions = []
-  , blockPrevHash = BS.pack "genesis"
+  , blockPrevHash = simpleHash "genesis"
   , blockStakePool = "GenesisPool"
-  , blockTimestamp = undefined  -- Placeholder, not used
+  , blockTimestamp = undefined  -- Placeholder
   }
 
 -- Initial blockchain state
@@ -107,7 +67,7 @@ initialBlockchain = Blockchain
 
 -- Hash a block
 hashBlock :: Block -> BlockHash
-hashBlock block = hash (BS.pack (show block))
+hashBlock block = simpleHash (show block)
 
 -- Add a new block to the blockchain
 addBlock :: Blockchain -> Block -> Blockchain
@@ -145,25 +105,29 @@ createBlock blockchain transactions creator = do
 queryTip :: Blockchain -> Block
 queryTip = head . chainBlocks
 
--- Demo smart contract execution
-executeSmartContract :: SmartContract -> Blockchain -> Blockchain
-executeSmartContract sc blockchain = blockchain  -- Placeholder for smart contract logic
-
--- Demo NFT creation
-createNFT :: Address -> String -> Blockchain -> Blockchain
-createNFT owner nftId blockchain = blockchain  -- Placeholder for NFT logic
-
--- Demo FT creation
-createFT :: Address -> String -> Balance -> Blockchain -> Blockchain
-createFT owner ftId amount blockchain = blockchain  -- Placeholder for FT logic
-
 -- Main function to demonstrate the blockchain
 main :: IO ()
 main = do
   let blockchain = initialBlockchain
+  putStrLn "Initial blockchain state:"
+  print blockchain
+  
+  putStrLn "\nSelecting block creator..."
   creator <- selectBlockCreator blockchain
+  putStrLn $ "Selected creator: " ++ creator
+  
+  putStrLn "\nCreating transaction..."
   currentTime <- getCurrentTime
   let transactions = [Transaction "Alice" "Bob" 100 1 currentTime]
+  
+  putStrLn "\nCreating new block..."
   block <- createBlock blockchain transactions creator
+  
+  putStrLn "\nAdding block to blockchain..."
   let newBlockchain = addBlock blockchain block
-  print $ queryTip newBlockchain
+  
+  putStrLn "\nNew blockchain state:"
+  print newBlockchain
+  
+  putStrLn "\nCurrent tip of the blockchain:"
+  print (queryTip newBlockchain)
