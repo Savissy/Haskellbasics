@@ -1,133 +1,182 @@
 -- Saviour Uzoukwu
 -- 17th March 2025
+{-# LANGUAGE RecordWildCards #-}
+
 module Main where
 
-import Data.List (find)
+import Data.List (foldl')
 import Data.Map (Map)
 import qualified Data.Map as Map
 import System.Random (randomRIO)
 import Data.Time.Clock (UTCTime, getCurrentTime)
 import Data.ByteString (ByteString)
 import qualified Data.ByteString.Char8 as BS
+import Data.Word (Word32)
+import Control.Monad (replicateM)
 
--- Define types
+-- Types
 type Address = String
 type Balance = Int
 type Stake = Int
 type BlockHash = ByteString
-type TransactionHash = ByteString
-type Slot = Int
+type MerkleRoot = ByteString
+type Nonce = Word32
+type Difficulty = Word32
 
--- Transaction structure
+-- Transaction
 data Transaction = Transaction
   { txFrom :: Address
   , txTo :: Address
   , txAmount :: Balance
-  , txFee :: Balance
-  , txTimestamp :: UTCTime
   } deriving (Show)
 
--- Block structure
+-- Block Header
+data BlockHeader = BlockHeader
+  { prevHash :: BlockHash
+  , merkleRoot :: MerkleRoot
+  , timestamp :: UTCTime
+  , nonce :: Nonce
+  , difficulty :: Difficulty
+  } deriving (Show)
+
+-- Block
 data Block = Block
-  { blockSlot :: Slot
-  , blockTransactions :: [Transaction]
-  , blockPrevHash :: BlockHash
-  , blockStakePool :: Address
-  , blockTimestamp :: UTCTime
+  { header :: BlockHeader
+  , transactions :: [Transaction]
+  , creator :: Address
   } deriving (Show)
 
--- Blockchain structure
+-- Blockchain
 data Blockchain = Blockchain
-  { chainBlocks :: [Block]
-  , chainStakePools :: Map Address Stake
-  , chainBalances :: Map Address Balance
+  { blocks :: [Block]
+  , stakePools :: Map Address Stake
+  , balances :: Map Address Balance
   } deriving (Show)
 
--- Simple hash function (for demonstration only - not cryptographically secure)
+-- Simple hash function
 simpleHash :: String -> BlockHash
-simpleHash = BS.pack . show . foldl (\acc c -> acc * 31 + fromEnum c) 0
+simpleHash = BS.pack . show . foldl' (\acc c -> acc * 31 + fromEnum c) 0
+
+-- Calculate Merkle root (simplified)
+calcMerkleRoot :: [Transaction] -> MerkleRoot
+calcMerkleRoot = simpleHash . concatMap show
 
 -- Genesis block
 genesisBlock :: Block
 genesisBlock = Block
-  { blockSlot = 0
-  , blockTransactions = []
-  , blockPrevHash = simpleHash "genesis"
-  , blockStakePool = "GenesisPool"
-  , blockTimestamp = undefined  -- Placeholder
+  { header = BlockHeader
+      { prevHash = simpleHash "0"
+      , merkleRoot = simpleHash ""
+      , timestamp = undefined
+      , nonce = 0
+      , difficulty = 0
+      }
+  , transactions = []
+  , creator = "Genesis"
   }
 
--- Initial blockchain state
+-- Initial blockchain
 initialBlockchain :: Blockchain
 initialBlockchain = Blockchain
-  { chainBlocks = [genesisBlock]
-  , chainStakePools = Map.fromList [("Pool1", 100), ("Pool2", 200)]
-  , chainBalances = Map.fromList [("Alice", 1000), ("Bob", 500)]
+  { blocks = [genesisBlock]
+  , stakePools = Map.fromList [("Pool1", 100), ("Pool2", 200), ("Pool3", 150)]
+  , balances = Map.fromList [("Alice", 1000), ("Bob", 500), ("Charlie", 750)]
   }
 
--- Hash a block
-hashBlock :: Block -> BlockHash
-hashBlock block = simpleHash (show block)
+-- Validate transaction
+validateTx :: Transaction -> Map Address Balance -> Bool
+validateTx Transaction{..} balances =
+  case Map.lookup txFrom balances of
+    Just bal -> bal >= txAmount
+    Nothing -> False
 
--- Add a new block to the blockchain
-addBlock :: Blockchain -> Block -> Blockchain
-addBlock blockchain block =
-  blockchain { chainBlocks = block : chainBlocks blockchain }
-
--- Select a random stake pool to create a block
-selectBlockCreator :: Blockchain -> IO Address
-selectBlockCreator blockchain = do
-  let stakePools = Map.toList (chainStakePools blockchain)
-  let totalStake = sum (map snd stakePools)
-  randomStake <- randomRIO (1, totalStake)
-  return $ selectStakePool stakePools randomStake
+-- Update balances
+updateBalances :: [Transaction] -> Map Address Balance -> Map Address Balance
+updateBalances txs balances = foldl' adjust balances txs
   where
-    selectStakePool ((addr, stake):rest) remainingStake
-      | remainingStake <= stake = addr
-      | otherwise = selectStakePool rest (remainingStake - stake)
+    adjust acc Transaction{..} =
+      Map.insert txTo (txAmount + Map.findWithDefault 0 txTo acc) $
+      Map.insert txFrom (Map.findWithDefault 0 txFrom acc - txAmount) acc
 
--- Create a new block
+-- Create new block
 createBlock :: Blockchain -> [Transaction] -> Address -> IO Block
-createBlock blockchain transactions creator = do
+createBlock bc@Blockchain{..} txs creator = do
   currentTime <- getCurrentTime
-  let prevBlock = head (chainBlocks blockchain)
-  let prevHash = hashBlock prevBlock
-  let slot = blockSlot prevBlock + 1
+  let prevBlock = head blocks
+  let validTxs = filter (`validateTx` balances) txs
   return Block
-    { blockSlot = slot
-    , blockTransactions = transactions
-    , blockPrevHash = prevHash
-    , blockStakePool = creator
-    , blockTimestamp = currentTime
+    { header = BlockHeader
+        { prevHash = blockHash prevBlock
+        , merkleRoot = calcMerkleRoot validTxs
+        , timestamp = currentTime
+        , nonce = 0  -- Not used in PoS
+        , difficulty = 100
+        }
+    , transactions = validTxs
+    , creator = creator
     }
 
--- Query the tip of the blockchain
-queryTip :: Blockchain -> Block
-queryTip = head . chainBlocks
+-- Block hash (hashes header only)
+blockHash :: Block -> BlockHash
+blockHash = simpleHash . show . header
 
--- Main function to demonstrate the blockchain
+-- Select block creator based on stake
+selectCreator :: Blockchain -> IO Address
+selectCreator Blockchain{..} = do
+  let poolList = Map.toList stakePools
+  let totalStake = sum $ map snd poolList
+  randomPoint <- randomRIO (1, totalStake)
+  return $ selectPool poolList randomPoint
+  where
+    selectPool ((addr,stake):pools) n
+      | n <= stake = addr
+      | otherwise = selectPool pools (n - stake)
+
+-- Add block to chain
+addBlock :: Blockchain -> Block -> Blockchain
+addBlock bc@Blockchain{..} block =
+  bc { blocks = block : blocks
+     , balances = updateBalances (transactions block) balances
+     }
+
+-- Demo: Print blockchain info
+printChain :: Blockchain -> IO ()
+printChain Blockchain{..} = do
+  putStrLn "\n=== Blockchain Summary ==="
+  putStrLn $ "Blocks: " ++ show (length blocks)
+  putStrLn $ "Stake Pools: " ++ show (Map.toList stakePools)
+  putStrLn $ "Balances: " ++ show (Map.toList balances)
+  
+  putStrLn "\nLatest Block:"
+  let latest = head blocks
+  putStrLn $ "Creator: " ++ creator latest
+  putStrLn $ "Tx Count: " ++ show (length $ transactions latest)
+  putStrLn $ "Prev Hash: " ++ BS.unpack (prevHash $ header latest)
+  putStrLn $ "Merkle Root: " ++ BS.unpack (merkleRoot $ header latest)
+
+-- Main simulation
 main :: IO ()
 main = do
-  let blockchain = initialBlockchain
-  putStrLn "Initial blockchain state:"
-  print blockchain
+  putStrLn "Starting blockchain simulation..."
   
-  putStrLn "\nSelecting block creator..."
-  creator <- selectBlockCreator blockchain
-  putStrLn $ "Selected creator: " ++ creator
+  -- Initialize
+  let bc0 = initialBlockchain
+  printChain bc0
   
-  putStrLn "\nCreating transaction..."
-  currentTime <- getCurrentTime
-  let transactions = [Transaction "Alice" "Bob" 100 1 currentTime]
+  -- Create some transactions
+  now <- getCurrentTime
+  let txs = [ Transaction "Alice" "Bob" 100
+            , Transaction "Bob" "Charlie" 50
+            , Transaction "Charlie" "Alice" 25
+            ]
   
-  putStrLn "\nCreating new block..."
-  block <- createBlock blockchain transactions creator
-  
-  putStrLn "\nAdding block to blockchain..."
-  let newBlockchain = addBlock blockchain block
-  
-  putStrLn "\nNew blockchain state:"
-  print newBlockchain
-  
-  putStrLn "\nCurrent tip of the blockchain:"
-  print (queryTip newBlockchain)
+  -- Create and add 3 blocks
+  bc1 <- addBlocks bc0 txs 3
+  printChain bc1
+  where
+    addBlocks bc _ 0 = return bc
+    addBlocks bc txs n = do
+      creator <- selectCreator bc
+      block <- createBlock bc txs creator
+      let newBC = addBlock bc block
+      addBlocks newBC txs (n - 1)
