@@ -7,12 +7,10 @@ module Main where
 import Data.List (foldl')
 import Data.Map (Map)
 import qualified Data.Map as Map
-import System.Random (randomRIO)
 import Data.Time.Clock (UTCTime, getCurrentTime)
 import Data.ByteString (ByteString)
 import qualified Data.ByteString.Char8 as BS
 import Data.Word (Word32)
-import Control.Monad (replicateM)
 
 -- Types
 type Address = String
@@ -98,18 +96,32 @@ updateBalances txs balances = foldl' adjust balances txs
       Map.insert txTo (txAmount + Map.findWithDefault 0 txTo acc) $
       Map.insert txFrom (Map.findWithDefault 0 txFrom acc - txAmount) acc
 
+-- Simple deterministic creator selection (replaces random)
+selectCreator :: Blockchain -> Int -> Address
+selectCreator Blockchain{..} roundNum =
+  let poolList = Map.toList stakePools
+      totalStake = sum $ map snd poolList
+      -- Simple round-robin selection based on block count
+      selected = roundNum `mod` totalStake
+  in selectPool poolList selected
+  where
+    selectPool ((addr,stake):pools) n
+      | n <= stake = addr
+      | otherwise = selectPool pools (n - stake)
+
 -- Create new block
-createBlock :: Blockchain -> [Transaction] -> Address -> IO Block
-createBlock bc@Blockchain{..} txs creator = do
+createBlock :: Blockchain -> [Transaction] -> Int -> IO Block
+createBlock bc@Blockchain{..} txs roundNum = do
   currentTime <- getCurrentTime
   let prevBlock = head blocks
   let validTxs = filter (`validateTx` balances) txs
+  let creator = selectCreator bc roundNum
   return Block
     { header = BlockHeader
         { prevHash = blockHash prevBlock
         , merkleRoot = calcMerkleRoot validTxs
         , timestamp = currentTime
-        , nonce = 0  -- Not used in PoS
+        , nonce = 0
         , difficulty = 100
         }
     , transactions = validTxs
@@ -119,18 +131,6 @@ createBlock bc@Blockchain{..} txs creator = do
 -- Block hash (hashes header only)
 blockHash :: Block -> BlockHash
 blockHash = simpleHash . show . header
-
--- Select block creator based on stake
-selectCreator :: Blockchain -> IO Address
-selectCreator Blockchain{..} = do
-  let poolList = Map.toList stakePools
-  let totalStake = sum $ map snd poolList
-  randomPoint <- randomRIO (1, totalStake)
-  return $ selectPool poolList randomPoint
-  where
-    selectPool ((addr,stake):pools) n
-      | n <= stake = addr
-      | otherwise = selectPool pools (n - stake)
 
 -- Add block to chain
 addBlock :: Blockchain -> Block -> Blockchain
@@ -170,13 +170,15 @@ main = do
             , Transaction "Charlie" "Alice" 25
             ]
   
-  -- Create and add 3 blocks
-  bc1 <- addBlocks bc0 txs 3
+  -- Create and add 3 blocks (using block count as round number)
+  bc1 <- foldM (\bc i -> do
+                block <- createBlock bc txs i
+                return (addBlock bc block)
+              ) bc0 [1..3]
+  
   printChain bc1
   where
-    addBlocks bc _ 0 = return bc
-    addBlocks bc txs n = do
-      creator <- selectCreator bc
-      block <- createBlock bc txs creator
-      let newBC = addBlock bc block
-      addBlocks newBC txs (n - 1)
+    foldM f z [] = return z
+    foldM f z (x:xs) = do
+      z' <- f z x
+      foldM f z' xs
