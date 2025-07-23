@@ -42,3 +42,21 @@ main = do
   print $ display Cash
   print $ display Card
   print $ display Cc
+
+--Create a type class Summable that provides sumUp :: [a] -> a.
+--Implement it for the type Int
+
+class Summable a where
+ sumUp :: [a] -> Int
+ 
+instance Summable Int where
+ sumUp [] = 0
+ sumUp (x:xs) = x + sumUp xs
+ 
+addUp :: [Int] -> Int
+addUp x = sumUp x
+
+
+main :: IO ()
+main = do
+  print $ addUp [1 .. 10]
