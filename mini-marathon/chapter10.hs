@@ -60,3 +60,22 @@ addUp x = sumUp x
 main :: IO ()
 main = do
   print $ addUp [1 .. 10]
+
+--Create a parameterized type Box a and make it an instance of Eq.
+
+data Box a = Empty | Has a deriving Show
+
+instance Eq a => Eq (Box a) where
+ (Has x) == Empty = False
+ (Has x) == (Has y) = x == y
+ Empty == Empty = True
+ _ == _ = False
+ 
+box :: Eq a => Box a -> Box a -> Bool
+box a b = a == b
+
+main :: IO ()
+main = do
+ print $ box (Has 1) Empty
+ print $ box (Has 1) (Has 2)
+ print $ box (Empty :: Box Int) (Empty :: Box Int)
