@@ -79,3 +79,25 @@ main = do
  print $ box (Has 1) Empty
  print $ box (Has 1) (Has 2)
  print $ box (Empty :: Box Int) (Empty :: Box Int)
+
+--Define a type class ShowDetailed with a function showDetailed :: a -> String.
+--Implement it for a type User.
+
+data User = Name | Age | Sex deriving Show
+
+class ShowDetailed a where
+ showDetailed :: a -> String
+ 
+instance ShowDetailed User where
+ showDetailed Name = "Saviour"
+ showDetailed Age = "Twenty-Six"
+ showDetailed Sex = "Male"
+ 
+details :: User -> String
+details x = showDetailed x
+
+main :: IO ()
+main = do
+ print $ details Name
+ print $ details Age
+ print $ details Sex
