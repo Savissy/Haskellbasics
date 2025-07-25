@@ -101,3 +101,18 @@ main = do
  print $ details Name
  print $ details Age
  print $ details Sex
+
+class Eq a => AdvancedEq a where
+  compareEquality :: a -> a -> Bool
+
+instance AdvancedEq Int where
+ compareEquality x y = x == y
+ 
+compareNum :: Int -> Int -> Bool
+compareNum x y = compareEquality x y
+ 
+
+main :: IO ()
+main = do
+  print $ compareNum 4 4
+
