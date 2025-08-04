@@ -24,3 +24,17 @@ main = do
     name <- getLine
     let x = read name :: Int
     print $ (x * 2)
+
+--Write a program that repeatedly asks the user for input until they enter "quit"
+main :: IO ()
+main = do
+    loop
+loop :: IO ()
+loop = do
+    putStrLn "enter an input or type Quit to stop loop"
+    x <- getLine
+    if x == "Quit"
+        then putStrLn "thanks for interacting"
+        else do 
+            putStrLn "the loop continues"
+            loop
