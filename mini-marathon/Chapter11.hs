@@ -38,3 +38,28 @@ loop = do
         else do 
             putStrLn "the loop continues"
             loop
+
+main :: IO ()
+main = do
+  putStrLn "Select an option from below:"
+  putStrLn "select A to say Hello"
+  putStrLn "select B to add two numbers"
+  putStrLn "select C to exit"
+  input <- getLine
+  if input == "A"
+    then putStrLn "Hello"
+        else if input == "B"
+            then do 
+                putStrLn "enter first number:"
+                x <- getLine
+                putStrLn "enter second number:"
+                y <- getLine
+                let xs = read x :: Int
+                    ys = read y :: Int
+                    sum = xs + ys
+                putStrLn ("The sum is: " ++ show sum)
+                else if input == "C"
+                    then putStrLn "Thanks for interacting"
+                        else do
+                            putStrLn "incorrect option"
+
