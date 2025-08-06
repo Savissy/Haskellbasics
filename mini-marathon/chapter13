@@ -1,0 +1,41 @@
+import System.Directory (listDirectory)
+import System.IO
+
+main :: IO ()
+main = do
+  putStrLn "Listing all files and directories in the current directory:"
+  files <- listDirectory "."
+  mapM_ putStrLn files
+
+import System.Directory (listDirectory)
+import Data.List (isInfixOf)
+import System.IO
+
+-- Filter filenames containing a given substring
+filterFilesBySubstring :: String -> [FilePath] -> [FilePath]
+filterFilesBySubstring substring = filter (isInfixOf substring)
+
+main :: IO ()
+main = do
+  putStrLn "Enter a substring to filter files:"
+  substring <- getLine
+  allFiles <- listDirectory "."
+  let matchedFiles = filterFilesBySubstring substring allFiles
+  putStrLn "\nFiltered files:"
+  mapM_ putStrLn matchedFiles
+
+import System.Directory (listDirectory)
+import Data.List (isInfixOf, sort)
+
+-- Filter and sort files based on a substring
+filterAndSortFiles :: String -> [FilePath] -> [FilePath]
+filterAndSortFiles substring = sort . filter (isInfixOf substring)
+
+main :: IO ()
+main = do
+  putStrLn "Enter a substring to filter files:"
+  substring <- getLine
+  allFiles <- listDirectory "."
+  let matchedFiles = filterAndSortFiles substring allFiles
+  putStrLn "\nFiltered and sorted files:"
+  mapM_ putStrLn matchedFiles
