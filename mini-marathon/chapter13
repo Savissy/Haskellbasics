@@ -68,3 +68,26 @@ emptyListMsg = "Cannot sum an empty list."
 main :: IO ()
 main = do
   putStrLn emptyListMsg
+
+import System.Directory (listDirectory)
+import Data.List (isInfixOf)
+import qualified Data.Map as Map
+
+-- Filters files by a substring
+filterFiles :: String -> [FilePath] -> [FilePath]
+filterFiles keyword = filter (isInfixOf keyword)
+
+-- Converts a list of file names to a map (fileName -> index)
+fileMap :: [FilePath] -> Map.Map FilePath Int
+fileMap files = Map.fromList (zip files [0..])
+
+-- Main function to demonstrate
+main :: IO ()
+main = do
+    putStrLn "Enter a keyword to filter files:"
+    keyword <- getLine
+    allFiles <- listDirectory "."
+    let filtered = filterFiles keyword allFiles
+        resultMap = fileMap filtered
+    putStrLn "Filtered file map:"
+    print resultMap
