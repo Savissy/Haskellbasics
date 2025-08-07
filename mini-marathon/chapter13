@@ -39,3 +39,32 @@ main = do
   let matchedFiles = filterAndSortFiles substring allFiles
   putStrLn "\nFiltered and sorted files:"
   mapM_ putStrLn matchedFiles
+
+module SumNonEmpty (sumNonEmpty) where
+
+-- | Sums a non-empty list.
+-- Throws an error if the list is empty.
+sumNonEmpty :: Num a => [a] -> a
+sumNonEmpty [] = error "sumNonEmpty: Cannot sum an empty list"
+sumNonEmpty xs = sum xs
+
+main :: IO ()
+main = do
+    print $ sumNonEmpty [1,2,3,4,5]
+    print $ sumNonEmpty []
+
+module SumNonEmpty (sumNonEmpty) where
+
+-- | Sums a non-empty list.
+-- Throws an error if the list is empty.
+sumNonEmpty :: Num a => [a] -> a
+sumNonEmpty [] = error "sumNonEmpty: Cannot sum an empty list"
+sumNonEmpty xs = sum xs
+
+-- Private helper, not exported
+emptyListMsg :: String
+emptyListMsg = "Cannot sum an empty list."
+
+main :: IO ()
+main = do
+  putStrLn emptyListMsg
