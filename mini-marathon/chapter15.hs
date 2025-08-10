@@ -93,6 +93,35 @@ main = do
                 Nothing     -> putStrLn "Error: Division by zero."
         _ -> putStrLn "Invalid input! Please enter valid numbers."
 
+import Text.Read (readMaybe)
+
+-- Safe division using Maybe
+safeDiv :: (Eq a, Fractional a) => a -> a -> Maybe a
+safeDiv _ 0 = Nothing
+safeDiv x y = Just (x / y)
+
+-- Calculate velocity safely
+calculateVelocity :: Double -> Double -> Maybe Double
+calculateVelocity distance time = safeDiv distance time
+
+main :: IO ()
+main = do
+    putStrLn "Enter distance (in meters):"
+    distStr <- getLine
+
+    putStrLn "Enter time (in seconds):"
+    timeStr <- getLine
+
+    -- Try to parse both values safely
+    let maybeDistance = readMaybe distStr :: Maybe Double
+        maybeTime     = readMaybe timeStr :: Maybe Double
+
+    case (maybeDistance, maybeTime) of
+        (Just d, Just t) ->
+            case calculateVelocity d t of
+                Just v  -> putStrLn $ "Velocity = " ++ show v ++ " m/s"
+                Nothing -> putStrLn "Error: Time cannot be zero."
+        _ -> putStrLn "Invalid input: Please enter valid numbers."
 
 
     
