@@ -71,6 +71,28 @@ main = do
     print (safeDiv 10 2)   -- Just 5.0
     print (safeDiv 7 0)    -- Nothing
 
+import Text.Read (readMaybe)
+
+-- Safe division
+safeDiv :: (Eq a, Fractional a) => a -> a -> Maybe a
+safeDiv _ 0 = Nothing
+safeDiv x y = Just (x / y)
+
+main :: IO ()
+main = do
+    putStrLn "Enter the numerator:"
+    numStr <- getLine
+
+    putStrLn "Enter the denominator:"
+    denStr <- getLine
+
+    case (readMaybe numStr :: Maybe Double, readMaybe denStr :: Maybe Double) of
+        (Just num, Just den) ->
+            case safeDiv num den of
+                Just result -> putStrLn $ "Result: " ++ show result
+                Nothing     -> putStrLn "Error: Division by zero."
+        _ -> putStrLn "Invalid input! Please enter valid numbers."
+
 
 
     
