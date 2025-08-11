@@ -123,6 +123,15 @@ main = do
                 Nothing -> putStrLn "Error: Time cannot be zero."
         _ -> putStrLn "Invalid input: Please enter valid numbers."
 
+-- Safe division with detailed error messages
+safeDivEither :: (Eq a, Fractional a, Show a) => a -> a -> Either String a
+safeDivEither _ 0 = Left "Error: Division by zero is not allowed."
+safeDivEither x y = Right (x / y)
+
+main :: IO ()
+main = do
+    print $ safeDivEither 10 2   -- Right 5.0
+    print $ safeDivEither 7 0    -- Left "Error: Division by zero is not allowed."
 
     
 
