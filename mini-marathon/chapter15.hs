@@ -133,6 +133,21 @@ main = do
     print $ safeDivEither 10 2   -- Right 5.0
     print $ safeDivEither 7 0    -- Left "Error: Division by zero is not allowed."
 
+import System.IO
+import Control.Exception (try, IOException)
+
+main :: IO ()
+main = do
+    putStrLn "Enter file name to read:"
+    fileName <- getLine
+    
+    result <- try (readFile fileName) :: IO (Either IOException String)
+    
+    case result of
+        Left err -> putStrLn $ "Error: Could not read file. Reason: " ++ show err
+        Right contents -> do
+            putStrLn "File contents:"
+            putStrLn contents
     
 
 
