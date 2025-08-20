@@ -1,6 +1,10 @@
 Haskell key Typeclasses, Function Type Signatures and their Instances
 
-
+Semigroup
+Monoids
+Functors
+Applicative
+Monads
 
  Semigroup
 
