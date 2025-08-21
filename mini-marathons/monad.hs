@@ -1,6 +1,6 @@
 
 
-1. `<$>` (fmap) - The Functor Operator
+1. <$> (fmap) - The Functor Operator
 
 What it is: Applies a pure function to a value inside a computational context (e.g., a `Maybe`, a `List`, an `IO` action). Pronounced "f-map".
 
@@ -23,7 +23,7 @@ haskell
 -- (getLine returns IO String, so toUpper <$> getLine returns IO String)
 toUpper <$> getLine -- If you type "hi", it becomes "HI" inside the IO action
 
-2. `<*>` - The Applicative Operator
+2. <*> - The Applicative Operator
 
 What it is: Applies a function inside a context to a value inside a context. This is the key differentiator from Functor. Pronounced "apply".
 
@@ -47,7 +47,7 @@ Nothing  <*> Just 5   -- Result: Nothing
 -- This is like calling a multi-argument function in a context
 (\x y -> x + y) <$> Just 1 <*> Just 2 -- Result: Just 3
 
-3. `>>=` (bind) - The Monad Operator
+3. >>= (bind) - The Monad Operator
 
 What it is: The essence of Monad. It sequences computations. It takes a value in a context, extracts it, and feeds it to a function that returns a new context. This allows subsequent computations to depend on the results of previous ones.
 
@@ -71,7 +71,7 @@ Just 5 >>= half  -- Result: Nothing (5 is not even)
 -- getLine >>= (\input -> putStrLn ("You said: " ++ input))
 main = getLine >>= putStrLn . ("You said: " ++)
 
-4. `pure` / `return`
+4. pure / return
 
 What they are: They both take a pure value and lift it into a minimal computational context. They are the same function (`return = pure`), with `pure` being the preferred modern term (from Applicative).
 
@@ -88,7 +88,7 @@ pure 5 :: Maybe Int    -- Result: Just 5
 pure 5 :: [Int]        -- Result: [5]  (the simplest list)
 return "hello" :: IO String -- Result: IO action that yields "hello"
 
-5. `>>` (then) - The Monad Operator for Sequencing
+5. >> (then) - The Monad Operator for Sequencing
 
 What it is: Used to sequence two monadic actions when you don't care about the result of the first one. It simply runs the first action for its side effects and then runs the second.
 
