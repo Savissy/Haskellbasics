@@ -178,7 +178,7 @@ class Functor f => Applicative f where
 
   pure :: a -> f a
 
-  (<>) :: f (a -> b) -> f a -> f b
+  (<*>) :: f (a -> b) -> f a -> f b
 
 Instances:
 
@@ -190,11 +190,11 @@ Instances:
 
      pure = Just
 
-     Just f <> Just x = Just (f x)
+     Just f <*> Just x = Just (f x)
 
-     _ <> _ = Nothing
+     _ <*> _ = Nothing
 
-    Example: Just (+1) <> Just 5 = Just 6
+    Example: Just (+1) <*> Just 5 = Just 6
 
 2. List (apply every function to every value):
 
