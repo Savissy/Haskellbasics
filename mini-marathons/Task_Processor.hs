@@ -1,18 +1,16 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+
 module TaskProcessor where
 
 import Control.Applicative (Alternative(..))
-import Control.Concurrent (threadDelay, forkIO, myThreadId, throwTo)
-import Control.Concurrent.Async (async, wait, mapConcurrently)
-import Control.Concurrent.STM (TVar, atomically, readTVar, writeTVar, newTVarIO)
-import Control.Monad (forever, when, void, replicateM)
-import Control.Monad.Base (MonadBase(..))
-import Control.Monad.Catch (MonadThrow, MonadCatch, throwM, catch)
-import Control.Monad.Reader (ReaderT, runReaderT, ask, asks)
+import Control.Concurrent (threadDelay)
+import Control.Monad (when, replicateM)
+import Control.Monad.Reader (ReaderT, runReaderT, ask)
 import Control.Monad.Trans (MonadIO(..))
 import Data.Foldable (traverse_)
 import Data.Time (UTCTime, getCurrentTime, diffUTCTime)
-import System.Random (randomRIO)
+import Control.Concurrent.STM
+  ( TVar, STM, atomically, readTVar, writeTVar, newTVarIO )
 
 -- Task types
 data Task = Task
@@ -26,9 +24,9 @@ data Priority = Low | Medium | High
   deriving (Show, Eq, Ord, Enum, Bounded)
 
 -- Task result
-data TaskResult = 
-    TaskSuccess String 
-  | TaskFailure String 
+data TaskResult =
+    TaskSuccess String
+  | TaskFailure String
   | TaskRetry Int String  -- Retry after delay
   deriving (Show, Eq)
 
@@ -49,11 +47,11 @@ data ProcessorState = ProcessorState
   }
 
 -- Task processor monad
-newtype TaskProcessor a = TaskProcessor 
+newtype TaskProcessor a = TaskProcessor
   { runTaskProcessor :: ReaderT (ProcessorConfig, ProcessorState) IO a }
-  deriving (Functor, Applicative, Monad, MonadIO, MonadThrow, MonadCatch)
+  deriving (Functor, Applicative, Monad, MonadIO)
 
--- Get configuration and state
+-- Helpers to access config and state
 getConfig :: TaskProcessor ProcessorConfig
 getConfig = TaskProcessor $ fst <$> ask
 
@@ -67,51 +65,52 @@ rateLimitRequest = do
   state <- getState
   now <- liftIO getCurrentTime
   lastTime <- liftIO $ atomically $ readTVar (lastRequestTime state)
-  
-  let timeDiff = diffUTCTime now lastTime
+
+  let timeDiff = realToFrac (diffUTCTime now lastTime) :: Double
       minDelay = 1.0 / fromIntegral (rateLimit config)
-  
+
   when (timeDiff < minDelay) $ do
-    let delayMicroseconds = floor ((minDelay - timeDiff) * 1000000)
+    let delayMicroseconds = floor ((minDelay - timeDiff) * 1e6)
     liftIO $ threadDelay delayMicroseconds
-  
+
   liftIO $ atomically $ writeTVar (lastRequestTime state) now
 
--- Process a single task
+-- Simulate processing a task
 processTask :: Task -> TaskProcessor TaskResult
 processTask task = do
   rateLimitRequest
   config <- getConfig
-  
-  -- Simulate processing with random success/failure
-  result <- liftIO $ randomRIO (0, 10 :: Int)
-  
-  if result > 2  -- 80% success rate
+
+  -- Simulate result deterministically
+  let result = taskId task `mod` 10
+
+  if result > 2
     then do
       liftIO $ putStrLn $ "Task " ++ show (taskId task) ++ " succeeded"
+      state <- getState
+      liftIO $ atomically $ modifyTVar (completedTasks state) (+1)
       return $ TaskSuccess ("Processed: " ++ taskName task)
-    else if result > 1  -- 10% failure
-      then do
-        liftIO $ putStrLn $ "Task " ++ show (taskId task) ++ " failed"
-        state <- getState
-        liftIO $ atomically $ modifyTVar (failedTasks state) (+1)
-        return $ TaskFailure ("Failed to process: " ++ taskName task)
-      else do  -- 10% retry
-        liftIO $ putStrLn $ "Task " ++ show (taskId task) ++ " needs retry"
-        state <- getState
-        liftIO $ atomically $ modifyTVar (retriedTasks state) (+1)
-        return $ TaskRetry (baseRetryDelay config) ("Retrying: " ++ taskName task)
+  else if result > 1
+    then do
+      liftIO $ putStrLn $ "Task " ++ show (taskId task) ++ " failed"
+      state <- getState
+      liftIO $ atomically $ modifyTVar (failedTasks state) (+1)
+      return $ TaskFailure ("Failed: " ++ taskName task)
+  else do
+      liftIO $ putStrLn $ "Task " ++ show (taskId task) ++ " needs retry"
+      state <- getState
+      liftIO $ atomically $ modifyTVar (retriedTasks state) (+1)
+      return $ TaskRetry (baseRetryDelay config) ("Retrying: " ++ taskName task)
 
--- Process tasks with retry logic
+-- Retry logic
 processTaskWithRetry :: Task -> TaskProcessor TaskResult
 processTaskWithRetry task = go 0
   where
     go retryCount = do
       config <- getConfig
       result <- processTask task
-      
       case result of
-        TaskRetry delay msg -> 
+        TaskRetry delay _ ->
           if retryCount < maxRetries config
             then do
               liftIO $ threadDelay delay
@@ -119,46 +118,24 @@ processTaskWithRetry task = go 0
             else return $ TaskFailure $ "Max retries exceeded for: " ++ taskName task
         _ -> return result
 
--- Process multiple tasks with concurrency control
+-- Process list of tasks (sequential fallback)
 processTasks :: [Task] -> TaskProcessor [TaskResult]
 processTasks tasks = do
   config <- getConfig
   let chunks = chunkList (maxConcurrentTasks config) tasks
-  
-  results <- traverse processChunk chunks
-  return $ concat results
+  results <- mapM processChunk chunks
+  return (concat results)
   where
     processChunk chunk = do
       liftIO $ putStrLn $ "Processing chunk of " ++ show (length chunk) ++ " tasks"
-      mapConcurrently processTaskWithRetry chunk
+      mapM processTaskWithRetry chunk
 
-    chunkList :: Int -> [a] -> [[a]]
     chunkList _ [] = []
     chunkList n xs = take n xs : chunkList n (drop n xs)
 
--- Process tasks with different strategies using Functor/Applicative
--- Functor: transform tasks
-mapTask :: (String -> String) -> Task -> Task
-mapTask f task = task { taskPayload = f (taskPayload task) }
-
--- Applicative: combine tasks
-combineTasks :: Task -> Task -> Task
-combineTasks t1 t2 = Task
-  { taskId = taskId t1
-  , taskName = taskName t1 ++ " & " ++ taskName t2
-  , taskPriority = max (taskPriority t1) (taskPriority t2)
-  , taskPayload = taskPayload t1 ++ " | " ++ taskPayload t2
-  }
-
--- Alternative: fallback task processing
-fallbackProcessing :: Task -> TaskProcessor TaskResult -> TaskProcessor TaskResult
-fallbackProcessing task primaryProcessor = 
-  primaryProcessor <|> (fallbackProcessor task)
-  where
-    fallbackProcessor :: Task -> TaskProcessor TaskResult
-    fallbackProcessor t = do
-      liftIO $ putStrLn $ "Using fallback processing for task " ++ show (taskId t)
-      return $ TaskSuccess $ "Fallback processing for: " ++ taskName t
+-- Modify TVar helper
+modifyTVar :: TVar a -> (a -> a) -> STM ()
+modifyTVar var f = readTVar var >>= writeTVar var . f
 
 -- Initialize processor state
 initProcessorState :: IO ProcessorState
@@ -169,52 +146,39 @@ initProcessorState = do
   lastTime <- newTVarIO =<< getCurrentTime
   return $ ProcessorState completed failed retried lastTime
 
--- Run the task processor
-runTaskProcessor :: ProcessorConfig -> ProcessorState -> TaskProcessor a -> IO a
-runTaskProcessor config state processor = 
+-- Updated to avoid name clash
+runTaskProcessorIO :: ProcessorConfig -> ProcessorState -> TaskProcessor a -> IO a
+runTaskProcessorIO config state processor =
   runReaderT (runTaskProcessor processor) (config, state)
 
--- Example usage
+-- Entry point
 main :: IO ()
 main = do
   putStrLn "Starting task processor..."
-  
-  -- Create configuration
+
   let config = ProcessorConfig
         { maxConcurrentTasks = 3
         , maxRetries = 2
         , baseRetryDelay = 100000  -- 100ms
-        , rateLimit = 5  -- 5 tasks per second
+        , rateLimit = 5
         }
-  
-  -- Initialize state
+
   state <- initProcessorState
-  
-  -- Create sample tasks
-  let tasks = [Task i ("Task " ++ show i) priority ("payload " ++ show i) 
-              | i <- [1..10]
-              , priority <- [Low, Medium, High]]
-  
-  -- Process tasks
-  results <- runTaskProcessor config state $ processTasks tasks
-  
-  -- Print results
-  putStrLn "Processing results:"
+
+  -- Sample tasks
+  let tasks = [ Task i ("Task " ++ show i) p ("payload " ++ show i)
+              | (i, p) <- zip [1..10] (cycle [Low, Medium, High]) ]
+
+  results <- runTaskProcessorIO config state $ processTasks tasks
+
+  putStrLn "\nProcessing results:"
   traverse_ print results
-  
-  -- Get statistics
+
   completed <- atomically $ readTVar (completedTasks state)
-  failed <- atomically $ readTVar (failedTasks state)
-  retried <- atomically $ readTVar (retriedTasks state)
-  
-  putStrLn $ "Completed: " ++ show completed
+  failed    <- atomically $ readTVar (failedTasks state)
+  retried   <- atomically $ readTVar (retriedTasks state)
+
+  putStrLn $ "\nCompleted: " ++ show completed
   putStrLn $ "Failed: " ++ show failed
   putStrLn $ "Retried: " ++ show retried
-  
   putStrLn "Task processing completed!"
-
--- Helper function to modify TVars
-modifyTVar :: TVar a -> (a -> a) -> STM ()
-modifyTVar var f = do
-  value <- readTVar var
-  writeTVar var (f value)
