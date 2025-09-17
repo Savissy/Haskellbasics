@@ -1,0 +1,10 @@
+Install Nix: curl -L https://nixos.org/nix/install | sh  Nix is a cross-platform package manager that utilizes a purely functional deployment model. 
+It is used to setup a Haskell Development Environment. 10. Run the command:  . /home/youruser/.nix-profile/etc/profile.d/nix.sh 
+11. Restart WSL (or computer for linux users) for changes to take effect.  12. Now we need to setup the IOHK binary caches to make the builds faster. 
+If you find you are building packages that are not defined in this repository, or if the build seems to take a very long time then you may not have this set up properly. 
+13. Make a directory in etc folder called nix, use cd /etc then sudo mkdir nix  14. In the nix folder create file call nix.conf using vim editor` sudo vim /etc/nix/nix.conf `  
+15. Paste the following:  substituters = https://hydra.iohk.io https://iohk.cachix.org https://cache.nixos.org/  trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= iohk.cachix.org1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=  
+16. Press esc key and type :x to save and exit vim.  17. Restart WSL or computer for Linux users a. Create a new directory called plutus where you can clone the Plutus project to use mkdir plutus. Change directory to plutus then clone the plutus-apps repository using ` git clone https://github.com/input-output-hk/plutus-apps `  
+b. Also clone the plutus pioneer program repo using ` git clone https://github.com/input-outputhk/plutus-pioneer-program `  
+18. In the plutus directory will be the cloned project called plutus-apps, change directory to plutus-apps then checkout the version of plutus that we are going to use `git checkout 7f53f18dfc788bf6aa929f47d840efa1247e11fd ` 
+19. Build nix by calling nix-shell . This takes around 30 minutes for first time users. If it takes more than 45 minutes it means you have not setup the IOHK binary caches to make the builds faster go back to steps 10 – 13. 
