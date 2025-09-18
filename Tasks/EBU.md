@@ -10,3 +10,15 @@ wsl --set-default Ubuntu-20.04
 
 # Run it to set up your user account
 wsl -d Ubuntu-20.04
+
+# Create the directory
+mkdir C:\WSL
+cd C:\WSL
+
+# Download the Ubuntu 20.04 rootfs
+# Note: This is a direct link to the rootfs tarball from the Ubuntu cloud images.
+$url = "https://cloud-images.ubuntu.com/releases/focal/release/ubuntu-20.04-server-cloudimg-amd64-wsl.rootfs.tar.gz"
+$output = "C:\WSL\ubuntu-20.04-wsl.rootfs.tar.gz"
+Invoke-WebRequest -Uri $url -OutFile $output
+
+Get-ChildItem C:\WSL\
