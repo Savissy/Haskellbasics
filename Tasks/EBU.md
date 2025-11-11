@@ -24,3 +24,6 @@ $output = "C:\WSL\ubuntu-20.04-wsl.rootfs.tar.gz"
 Invoke-WebRequest -Uri $url -OutFile $output
 
 Get-ChildItem C:\WSL\
+
+
+cabal run bls12-381-costs 4. Launch REPL: cabal repl plutus-tx Test expressions: 
