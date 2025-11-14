@@ -15,3 +15,6 @@ max-jobs = auto
 cores = 0 
 keep-outputs = true 
 keep-derivations = true
+
+sudo nano /etc/nix/nix.conf 
+. ~/.nix-profile/etc/profile.d/nix.sh
