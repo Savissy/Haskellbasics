@@ -11,4 +11,7 @@ trusted-public-keys = \ cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspc
 # Allow users in the nix-users group to control builds 
 trusted-users = root hope 
 # Reduce logs and improve performance 
-max-jobs = auto cores = 0 keep-outputs = true keep-derivations = true 
+max-jobs = auto 
+cores = 0 
+keep-outputs = true 
+keep-derivations = true
