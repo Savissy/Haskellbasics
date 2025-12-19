@@ -29,3 +29,4 @@ Get-ChildItem C:\WSL\
 cabal run bls12-381-costs 4. Launch REPL: cabal repl plutus-tx Test expressions: 
 
 https://chatgpt.com/share/69443a73-2ae8-8008-8079-1999fa8cf9e7
+EBU/Onchain
