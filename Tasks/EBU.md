@@ -34,6 +34,5 @@ EBU/Onchain
 create an off chain code for the working smart contract above without using lucid to properly test the smart contract from my terminal. all emulator tests and the necessary cabal modifications should be provided. note that the above smart contract fully compiles successfully 
 above is the library section od my cabal file and below is the test suite section of my cabal file, hiw doni modify it tonuse it properly for the emulator testing
 above is the library section od my cabal file and below is the test suite section of my cabal file, hiw doni modify it tonuse it properly for the emulator testing
-EBU/Test
-Offchain
+EBU/Offchain
 EscrowValidator
