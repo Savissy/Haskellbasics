@@ -15,6 +15,8 @@ max-jobs = auto
 cores = 0 
 keep-outputs = true 
 keep-derivations = true
+https://github.com/IntersectMBO/cardano-node/pull/6427
+https://github.com/IntersectMBO/plutus/pull/7565
 
 sudo nano /etc/nix/nix.conf 
 . ~/.nix-profile/etc/profile.d/nix.sh
