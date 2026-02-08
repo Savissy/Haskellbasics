@@ -21,3 +21,4 @@ https://github.com/IntersectMBO/plutus/pull/7565
 sudo nano /etc/nix/nix.conf 
 . ~/.nix-profile/etc/profile.d/nix.sh
 ypym kooq vatm jgoo
+addr_test1qpxhlk0dr8rncgz9lw0hsajm3astcav4e7vfj5qmm5f0hrlttrwn89acgyd544lznvsu8q03pspajgc82t55uuxrs7uqwjxzk0
