@@ -216,7 +216,7 @@ main = do
   -- Replace with your land NFT PolicyId / CurrencySymbol (56 hex chars)
   -- This MUST match the policy you compile from LandMintingPolicy.hs
   let landPolicyId :: CurrencySymbol
-      landPolicyId = CurrencySymbol (toBuiltin (B16.decodeLenient "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
+      landPolicyId = CurrencySymbol (toBuiltin (B16.decodeLenient "20ebbc713d11a2f9ae6a6c1ddbfcf95d107e0c0cdb162e6a2ab44891"))
 
   let val   = validator authorityPkh landPolicyId
       bech32 = toBech32ScriptAddress network val
