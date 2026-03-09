@@ -55,3 +55,4 @@ Email: thevertex.africa@gmail.com
 FB: vertex.africa
 IG: vertex.africa
 Tel:+2348164425210
+https://www.photoroom.com/tools/background-remover
