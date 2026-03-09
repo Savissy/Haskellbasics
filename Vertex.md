@@ -56,3 +56,10 @@ FB: vertex.africa
 IG: vertex.africa
 Tel:+2348164425210
 https://www.photoroom.com/tools/background-remover
+Who we are
+
+VERTEX AFRICA is a youth focused organization with the mandate to facilitate the rise of Africa by empowering and building her youth.
+
+
+Our Vison.
+An Africa at her highest potential, shaped and sustained by a generation of purposeful and principled young leaders.
