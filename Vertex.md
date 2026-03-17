@@ -63,3 +63,39 @@ VERTEX AFRICA is a youth focused organization with the mandate to facilitate the
 
 Our Vison.
 An Africa at her highest potential, shaped and sustained by a generation of purposeful and principled young leaders.
+
+
+Slide 1 — Hook / Question  
+So, why youth empowerment?
+
+Slide 2 — Population Context  
+You may have heard the phrase, “Africa is young.” This literally means that Africa has the youngest population in the world. As of the end of 2025, Africa’s population is estimated at 1.5 billion, with 70% under 30. This shows the immense potential of Africa’s youth. If Africa is to rise, her youth must rise—they must be empowered.
+
+Slide 3 — What is Youth Empowerment?  
+Youth empowerment is a process of equipping young people with the skills, confidence, resources, and authority to take control of their lives, make informed decisions, and drive positive change in their communities and society.  
+
+It is about:  
+- Helping them take charge of their own lives 
+- building competence, confidence, and connection  
+- creating opportunities to become active, self-reliant contributors  
+
+Youth empowerment is not just about knowledge—it is about enabling action and impact.
+
+Slide 4 — Importance to Africa  
+Empowering youth is essential for Africa’s growth and transformation.  
+
+- A generation that is prepared, principled, and visionary drives economic progress  
+- strengthens communities  
+- shapes the continent’s global narrative  
+Africa’s rise depends on young people ready to lead, innovate, and make meaningful change
+
+Slide 5 — Vertex Africa Mission  
+At Vertex Africa, youth empowerment is at the heart of our mission. We equip, inspire, and raise young Africans who 
+- lead with integrity, 
+- ⁠influence their communities, 
+- ⁠ ⁠Help build strong, united, and rising Africa.
+
+We are not training followers. We are raising builders and leaders.
+
+Slide 6 — Closing / Call to Action  
+The rise of Africa begins with building her youth.
