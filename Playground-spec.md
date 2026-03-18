@@ -114,3 +114,55 @@ failed to solve: process "/bin/sh -c cabal update && cabal build -j" did not com
  ⠦ Image mysql:8.4 [⣿⣿⣿⠀⣿⡀⣿⣿⣿⡀⣿⣄] 42.59MB / 248.5MB                   Pulling                                                       540.6s
 short read: expected 15234346 bytes but got 6701056: unexpected EOF
 dell_8th_gen_core_i5@DESKTOP-R4MNH88:~/haskel-IDE/IDE$ 
+
+
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+
+module Database
+  ( initDatabase
+  , saveWorkspaceMeta
+  , loadWorkspaceMeta
+  , getWorkspaceMeta
+  , appendBuildLog
+  , loadBuildLogs
+  , getBuildHistory
+  , recordBuildStarted
+  , recordBuildFinished
+  , recordWorkspaceCreated
+  , recordWorkspaceRenamed
+  , recordWorkspaceDeleted
+  , recordWorkspaceCleared
+  , recordWorkspaceRestored
+  , recordFileWrite
+  ) where
+
+import Control.Exception (bracket)
+import Control.Monad (void)
+import qualified Data.Aeson as Aeson
+import Data.Aeson (Value)
+import Data.Int (Int64)
+import Data.Maybe (listToMaybe)
+import Data.Text (Text)
+import qualified Data.Text as T
+import Data.Time.Clock (getCurrentTime)
+import Database.MySQL.Simple
+  ( Connection
+  , ConnectInfo(..)
+  , Only(..)
+  , close
+  , connect
+  , defaultConnectInfo
+  , execute
+  , execute_
+  , field
+  , fromRow
+  , query
+  , query_
+  )
+import Database.MySQL.Simple.QueryParams ()
+import Database.MySQL.Simple.Result ()
+import System.Environment (lookupEnv)
+import Text.Read (readMaybe)
+
+import Types (BuildRecord(..), WorkspaceMeta(..))
