@@ -10,3 +10,9 @@ By acquiring financial knowledge, you'll be more confident in your financial dec
 
 
 A wealth mindset is a set of beliefs, attitudes, and thought patterns that support achieving and maintaining financial success.
+
+
+https://us02web.zoom.us/j/87269237278?pwd=RLs5i2b97bshpV2hVWU7xFKlFWCZrN.1
+
+Meeting ID: 872 6923 7278
+Passcode: 766362
