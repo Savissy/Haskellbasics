@@ -66,14 +66,79 @@ Imitate Word Press Easy of Use
     -- AI integrated
     -- Coxy Wallet integrated
 
+services:
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: cardano_ide
+      MYSQL_USER: cardano_ide_user
+      MYSQL_PASSWORD: cardano_ide_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./apps/haskell-api/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
 
-=> => unpacking to docker.io/library/ide-haskell-api:latest                                 21.5s
- => resolving provenance for metadata file                                                    0.2s
-[+] build 1/1
- ✔ Image ide-haskell-api Built                                                              1273.7s
-WARN[0000] Found orphan containers ([ide-redis-ui-1 ide-redis-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up. 
-[+] up 3/3
- ✔ Container ide-mysql-1       Running                                                         0.0s
- ✔ Container ide-phpmyadmin-1  Running                                                         0.0s
- ✔ Container ide-haskell-api-1 Recreated                                                       2.2s
-dell_8th_gen_core_i5@DESKTOP-R4MNH88:~/haskel-IDE/IDE$ 
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8081:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  haskell-api:
+    build: ./apps/haskell-api
+    environment:
+      - WORKSPACE_ROOT=/data/workspaces
+      - ALLOWED_ORIGINS=http://127.0.0.1:5173,http://localhost:5173,http://127.0.0.1:5174,http://localhost:5174,http://127.0.0.1:5175,http://localhost:5175
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=cardano_ide
+      - MYSQL_USER=cardano_ide_user
+      - MYSQL_PASSWORD=cardano_ide_pass
+    volumes:
+      - ./data/workspaces:/data/workspaces
+    ports: ["8080:8080"]
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  compiler-worker:
+    build: ./apps/compiler-worker
+    environment:
+      - WORKSPACE_ROOT=/data/workspaces
+      - DEFAULT_PROJECT=demo
+      - COMPILE_CMD=bash -lc "cd /data/workspaces/demo && cabal build 2>&1"
+    volumes:
+      - ./data/workspaces:/data/workspaces
+
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports: ["5173:5173"]
+    environment:
+      - NODE_OPTIONS=--dns-result-order=ipv4first
+    command: sh -lc "npm i -g pnpm@9 && pnpm i && pnpm -C apps/shell-frontend dev --host 0.0.0.0"
+    depends_on:
+      haskell-api:
+        condition: service_started
+
+volumes:
+  mysql-data:
