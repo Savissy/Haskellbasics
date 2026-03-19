@@ -150,4 +150,12 @@ CREATE TABLE IF NOT EXISTS file_events (
 
 INSERT IGNORE INTO users (email, display_name, auth_provider, provider_user_id)
 VALUES ('local@cardano-ide.dev', 'Local User', 'local', 'local-user');
+
+dell_8th_gen_core_i5@DESKTOP-R4MNH88:~/haskel-IDE/IDE$ docker compose logs haskell-api --tail=100
+haskell-api-1  | Warning: Both /root/.cabal and /root/.config/cabal/config exist - ignoring the
+haskell-api-1  | former.
+haskell-api-1  | It is advisable to remove one of them. In that case, we will use the remaining
+haskell-api-1  | one by default (unless '$CABAL_DIR' is explicitly set).
+haskell-api-1  | cardano-ide-api: ConnectionError {errFunction = "connect", errNumber = 2005, errMessage = "Unknown MySQL server host 'mysql' (-2)"}
+dell_8th_gen_core_i5@DESKTOP-R4MNH88:~/haskel-IDE/IDE$ 
   
