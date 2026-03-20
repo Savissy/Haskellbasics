@@ -25,4 +25,15 @@ ide-phpmyadmin-1   phpmyadmin:latest   "/docker-entrypoint.…"   phpmyadmin   3
 dell_8th_gen_core_i5@DESKTOP-R4MNH88:~/haskel-IDE/IDE$ docker compose exec haskell-api sh -lc 'env | grep MYSQL; getent hosts mysql || true'
 service "haskell-api" is not running
 dell_8th_gen_core_i5@DESKTOP-R4MNH88:~/haskel-IDE/IDE$ 
-  
+
+
+  sqlite-web:
+    image: coleifer/sqlite-web
+    restart: unless-stopped
+    command: sqlite_web -H 0.0.0.0 -p 8082 /data/db/cardano_ide.sqlite
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - "8082:8082"
+    depends_on:
+      - haskell-api
