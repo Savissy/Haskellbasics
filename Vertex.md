@@ -24,3 +24,7 @@ Across every sector — education, health, governance, economy, technology, and 
 Slide 9— Closing / CTA
 This is the Africa we are working toward.
 Not a continent defined by her challenges, but distinguished by the generation she chose to build — and the systems she put in place to support them. At Vertex Africa, this is not a distant vision. It is the work we show up to every day. 🌍
+
+“This is what Africa looks like when her youth are empowered.”
+
+Cover page.
