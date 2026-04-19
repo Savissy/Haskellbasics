@@ -18,3 +18,8 @@ Meeting ID: 872 6923 7278
 Passcode: 766362
 
 https://oldmutual.wd3.myworkdayjobs.com/en-US/Old_Mutual_Careers/job/Cape-Town/Intermediate-Software-Engineer_JR-78286?q=Software%20developer
+
+
+[4/19, 9:04 PM] Florishing Florence: thevertexafrica1@gmail.com
+[4/19, 9:05 PM] Florishing Florence: IG : vertex.africa
+[4/19, 9:06 PM] Florishing Florence: FB : Vertex.Africa
