@@ -23,3 +23,7 @@ https://oldmutual.wd3.myworkdayjobs.com/en-US/Old_Mutual_Careers/job/Cape-Town/I
 [4/19, 9:04 PM] Florishing Florence: thevertexafrica1@gmail.com
 [4/19, 9:05 PM] Florishing Florence: IG : vertex.africa
 [4/19, 9:06 PM] Florishing Florence: FB : Vertex.Africa
+
+https://docs.google.com/forms/d/e/1FAIpQLSc8Xp3cArA0XqNJCXyeMXh2LhR9H32-zAceCuw1TNV7qfSvBw/viewform?usp=publish-editor
+
+https://forms.gle/otr7KmVCNkPdC8ie9
