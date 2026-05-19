@@ -310,3 +310,27 @@ This gives:
 ✅ No need to open Excel
 
 This is the modern business-standard solution.
+
+Sn
+Date
+Name of material 
+Suppliers name
+Date of analysis 
+Source (local/imported)
+Production date
+Expiry date
+Batch no
+Container no/truck no
+Waybill no
+Coa yes/no
+Unit/pack
+Quantity
+Qty waybilled
+Qty supplied
+Qty passed
+QA visual inspections (tamper proof, damages,labels,others)
+Qty rejected
+Shortages
+Comments
+
+
