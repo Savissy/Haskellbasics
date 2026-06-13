@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trust &amp; Safety | Open Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0..1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #121c2a;
+        background: #f6f9f7;
+      }
+
+      .material-symbols-outlined {
+        font-family: "Material Symbols Outlined";
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: "liga";
+        -webkit-font-smoothing: antialiased;
+        font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+      }
+
+      .icon-fill {
+        font-variation-settings: "FILL" 1, "wght" 600, "GRAD" 0, "opsz" 24;
+      }
+
+      .trust-hero {
+        position: relative;
+        overflow: hidden;
+        background-color: #003527;
+        background-image:
+          radial-gradient(circle at top left, rgba(149, 211, 186, 0.22), transparent 38%),
+          radial-gradient(circle at 88% 16%, rgba(254, 214, 91, 0.16), transparent 32%),
+          radial-gradient(circle, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+        background-size: auto, auto, 28px 28px;
+      }
+
+      .timeline-item:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        left: 23px;
+        top: 48px;
+        width: 2px;
+        bottom: 0;
+        background: linear-gradient(to bottom, #003527, #95d3ba);
+        opacity: 0.35;
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: 3px solid rgba(0, 53, 39, 0.35);
+        outline-offset: 3px;
+        border-radius: 6px;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      /* Skip link: hidden until focused */
+      .skip-link {
+        position: absolute;
+        left: 16px;
+        top: -60px;
+        z-index: 60;
+        border-radius: 12px;
+        background: #003527;
+        color: #fff;
+        padding: 12px 18px;
+        font-size: 14px;
+        font-weight: 800;
+        transition: top 0.18s ease;
+      }
+      .skip-link:focus {
+        top: 12px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="w-full bg-[#003527] px-4 py-2 text-center text-[#ffe088]">
+      <div class="mx-auto flex max-w-[1280px] items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">shield_locked</span>
+        <span class="text-sm font-semibold">
+          Buyer Protection on every order — payments are held until delivery is confirmed.
+        </span>
+      </div>
+    </div>
+
+    <header class="sticky top-0 z-40 border-b border-[#bfc9c3] bg-white">
+      <div class="mx-auto flex max-w-[1280px] items-center justify-between gap-6 px-4 py-4 md:px-10">
+        <a href="/" class="flex items-center gap-2 text-2xl font-bold text-[#003527]">
+          <span class="material-symbols-outlined icon-fill">shopping_bag</span>
+          <span>Open Market</span>
+        </a>
+
+        <nav class="hidden items-center gap-6 md:flex" aria-label="Primary navigation">
+          <a href="/shop" class="text-sm font-semibold text-[#404944] transition hover:text-[#003527]">Shop</a>
+          <a href="/stores" class="text-sm font-semibold text-[#404944] transition hover:text-[#003527]">Stores</a>
+          <a href="/#categories" class="text-sm font-semibold text-[#404944] transition hover:text-[#003527]">Categories</a>
+          <a href="/how-it-works" class="text-sm font-semibold text-[#404944] transition hover:text-[#003527]">How it works</a>
+          <a href="/become-seller" class="text-sm font-semibold text-[#404944] transition hover:text-[#003527]">Become a seller</a>
+          <a href="/help-centre" class="text-sm font-semibold text-[#404944] transition hover:text-[#003527]">Help</a>
+        </nav>
+
+        <div class="hidden flex-1 justify-end lg:flex">
+          <div class="relative w-full max-w-xs">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#404944]">search</span>
+            <label for="site-search" class="sr-only">Search products</label>
+            <input
+              id="site-search"
+              type="search"
+              placeholder="Search products..."
+              class="w-full rounded-full border border-[#bfc9c3] bg-[#f8f9ff] py-2 pl-10 pr-4 text-sm outline-none transition focus:border-[#003527] focus:ring-1 focus:ring-[#003527]"
+            />
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <a href="/cart" aria-label="Cart, 0 items" class="relative text-[#003527]">
+            <span class="material-symbols-outlined icon-fill">shopping_bag</span>
+            <span class="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#fed65b] text-[10px] font-bold text-[#745c00]">0</span>
+          </a>
+
+          <div class="hidden items-center gap-3 md:flex">
+            <a href="/login" class="text-sm font-semibold text-[#003527]">Sign In</a>
+            <a href="/register" class="rounded-xl bg-[#003527] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90">Join Now</a>
+          </div>
+
+          <button
+            type="button"
+            id="menu-toggle"
+            class="text-[#003527] md:hidden"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <span id="menu-toggle-icon" class="material-symbols-outlined">menu</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile menu panel -->
+      <div id="mobile-menu" class="border-t border-[#dbe6e1] bg-white md:hidden" hidden>
+        <nav class="mx-auto flex max-w-[1280px] flex-col gap-1 px-4 py-3" aria-label="Mobile primary navigation">
+          <a href="/shop" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#404944] transition hover:bg-[#f0faf6] hover:text-[#003527]">Shop</a>
+          <a href="/stores" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#404944] transition hover:bg-[#f0faf6] hover:text-[#003527]">Stores</a>
+          <a href="/#categories" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#404944] transition hover:bg-[#f0faf6] hover:text-[#003527]">Categories</a>
+          <a href="/how-it-works" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#404944] transition hover:bg-[#f0faf6] hover:text-[#003527]">How it works</a>
+          <a href="/become-seller" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#404944] transition hover:bg-[#f0faf6] hover:text-[#003527]">Become a seller</a>
+          <a href="/help-centre" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#404944] transition hover:bg-[#f0faf6] hover:text-[#003527]">Help</a>
+          <div class="mt-2 flex gap-2 border-t border-[#dbe6e1] pt-3">
+            <a href="/login" class="flex-1 rounded-xl border border-[#003527] px-4 py-2.5 text-center text-sm font-semibold text-[#003527]">Sign In</a>
+            <a href="/register" class="flex-1 rounded-xl bg-[#003527] px-4 py-2.5 text-center text-sm font-semibold text-white">Join Now</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="bg-[#f6f9f7]">
+      <section class="trust-hero">
+        <div class="mx-auto max-w-[1280px] px-4 py-14 md:px-10 md:py-20">
+          <div class="max-w-3xl">
+            <span class="inline-flex items-center gap-2 rounded-full border border-[#fed65b]/30 bg-[#fed65b]/15 px-4 py-2 text-xs font-black uppercase tracking-wide text-[#fed65b]">
+              <span class="material-symbols-outlined icon-fill text-[15px]">shield_locked</span>
+              Trust &amp; Safety
+            </span>
+
+            <h1 class="my-5 text-[40px] font-black leading-[1.02] tracking-[-0.055em] text-white md:text-[66px]">
+              Safer buying and selling <span class="text-[#fed65b]">for local orders.</span>
+            </h1>
+
+            <p class="max-w-[620px] text-[17px] leading-8 text-white/70">
+              Protected payments, delivery confirmation, verified sellers, real reviews, and dispute
+              support — so every order is covered from checkout to handover.
+            </p>
+
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="/shop" class="inline-flex items-center justify-center gap-2 rounded-[18px] bg-[#fed65b] px-7 py-[18px] text-[15px] font-black text-[#3a2e00] shadow-[0_12px_32px_rgba(254,214,91,.4)] transition hover:opacity-90">
+                Start shopping
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </a>
+
+              <a href="/help-centre" class="inline-flex items-center justify-center gap-2 rounded-[18px] border border-white/25 px-7 py-[18px] text-[15px] font-black text-white transition hover:bg-white/10">
+                Visit Help Centre
+                <span class="material-symbols-outlined text-[18px]">support_agent</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-[1280px] px-4 py-10 md:px-10 md:py-14">
+        <div class="mb-8 max-w-3xl">
+          <p class="mb-2 text-xs font-black uppercase tracking-[0.18em] text-[#003527]">Protection built in</p>
+          <h2 class="mb-3 text-[28px] font-black leading-tight tracking-[-0.04em] text-[#121c2a] md:text-[42px]">
+            What makes Open Market safer?
+          </h2>
+          <p class="text-sm leading-7 text-[#404944] md:text-base">
+            Trust comes from clear order steps, seller accountability, protected payments, and real support when something goes wrong.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="flex flex-col justify-between rounded-[24px] border border-[#dbe6e1] bg-white p-6 shadow-[0_6px_24px_rgba(0,53,39,0.04)] transition hover:-translate-y-1 hover:border-[#95d3ba] hover:shadow-[0_18px_42px_rgba(0,53,39,.09)]">
+            <div>
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f0faf6] text-[#003527]">
+                <span class="material-symbols-outlined icon-fill">shield_locked</span>
+              </div>
+              <h3 class="mb-2 text-lg font-black text-[#121c2a]">Buyer Protection</h3>
+              <p class="text-sm leading-6 text-[#404944]">Your payment is held safely in escrow until you confirm the order has arrived.</p>
+            </div>
+          </article>
+
+          <article class="flex flex-col justify-between rounded-[24px] border border-[#dbe6e1] bg-white p-6 shadow-[0_6px_24px_rgba(0,53,39,0.04)] transition hover:-translate-y-1 hover:border-[#95d3ba] hover:shadow-[0_18px_42px_rgba(0,53,39,.09)]">
+            <div>
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f0faf6] text-[#003527]">
+                <span class="material-symbols-outlined icon-fill">verified_user</span>
+              </div>
+              <h3 class="mb-2 text-lg font-black text-[#121c2a]">Verified stores</h3>
+              <p class="text-sm leading-6 text-[#404944]">Sellers pass identity, mobile, and bank checks before earning the verified mark.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2 rounded-xl border border-[#b7e4d1] bg-[#f0faf6] p-2">
+              <div class="flex h-6 w-6 items-center justify-center rounded-full bg-[#003527] text-[10px] font-black text-white">KM</div>
+              <span class="max-w-[80px] truncate text-xs font-black text-[#121c2a]">Karabo M.</span>
+              <span class="inline-flex items-center gap-0.5 rounded-full bg-[#003527] px-1.5 py-0.5 text-[9px] font-black uppercase text-[#fed65b]">
+                <span class="material-symbols-outlined icon-fill text-[10px]">verified</span>Verified
+              </span>
+            </div>
+          </article>
+
+          <article class="flex flex-col justify-between rounded-[24px] border border-[#dbe6e1] bg-white p-6 shadow-[0_6px_24px_rgba(0,53,39,0.04)] transition hover:-translate-y-1 hover:border-[#95d3ba] hover:shadow-[0_18px_42px_rgba(0,53,39,.09)]">
+            <div>
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f0faf6] text-[#003527]">
+                <span class="material-symbols-outlined icon-fill">support_agent</span>
+              </div>
+              <h3 class="mb-2 text-lg font-black text-[#121c2a]">Dispute support</h3>
+              <p class="text-sm leading-6 text-[#404944]">If something goes wrong, you can freeze the payout before our team reviews the order.</p>
+            </div>
+          </article>
+
+          <article class="flex flex-col justify-between rounded-[24px] border border-[#dbe6e1] bg-white p-6 shadow-[0_6px_24px_rgba(0,53,39,0.04)] transition hover:-translate-y-1 hover:border-[#95d3ba] hover:shadow-[0_18px_42px_rgba(0,53,39,.09)]">
+            <div>
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f0faf6] text-[#003527]">
+                <span class="material-symbols-outlined icon-fill">rate_review</span>
+              </div>
+              <h3 class="mb-2 text-lg font-black text-[#121c2a]">Ratings &amp; reviews</h3>
+              <p class="text-sm leading-6 text-[#404944]">Reviews come only from verified purchases, so the feedback you read reflects real orders.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-[1280px] px-4 pb-14 md:px-10 md:pb-16">
+        <div class="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-12">
+          <div class="flex flex-col justify-between rounded-[32px] bg-[#003527] p-8 text-white shadow-[0_18px_44px_rgba(0,53,39,.16)] md:p-10 lg:col-span-5">
+            <div>
+              <span class="material-symbols-outlined icon-fill mb-4 block text-[38px] text-[#fed65b]">shield_locked</span>
+              <h2 class="mb-4 text-[30px] font-black leading-tight tracking-[-0.04em] md:text-[38px]">
+                How Buyer Protection works
+              </h2>
+              <p class="mb-6 text-sm leading-7 text-white/70 md:text-base">
+                Sellers are never paid at checkout. Your money stays protected until delivery is confirmed.
+                Switch the view below to see your side of the process.
+              </p>
+            </div>
+
+            <div
+              id="sim-tablist"
+              role="tablist"
+              aria-label="View Buyer Protection steps as a buyer or a seller"
+              class="flex max-w-xs rounded-xl border border-white/10 bg-white/10 p-1"
+            >
+              <button
+                id="sim-buyer-btn"
+                role="tab"
+                aria-selected="true"
+                aria-controls="simulator-pipeline"
+                type="button"
+                class="flex-1 rounded-lg bg-[#fed65b] px-4 py-2.5 text-xs font-black uppercase tracking-wider text-[#3a2e00] transition"
+              >
+                I am a Buyer
+              </button>
+              <button
+                id="sim-seller-btn"
+                role="tab"
+                aria-selected="false"
+                aria-controls="simulator-pipeline"
+                tabindex="-1"
+                type="button"
+                class="flex-1 rounded-lg px-4 py-2.5 text-xs font-black uppercase tracking-wider text-white transition hover:text-[#fed65b]"
+              >
+                I am a Seller
+              </button>
+            </div>
+          </div>
+
+          <div class="rounded-[32px] border border-[#dbe6e1] bg-white p-7 shadow-[0_8px_38px_rgba(0,53,39,0.06)] md:p-10 lg:col-span-7">
+            <div
+              id="simulator-pipeline"
+              role="tabpanel"
+              aria-live="polite"
+              tabindex="0"
+              class="space-y-0 outline-none"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mx-auto grid max-w-[1280px] grid-cols-1 gap-6 px-4 pb-14 md:px-10 md:pb-16 lg:grid-cols-2">
+        <article class="rounded-[32px] border border-[#dbe6e1] bg-white p-7 shadow-[0_8px_38px_rgba(0,53,39,0.06)] md:p-8">
+          <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f0faf6] text-[#003527]">
+            <span class="material-symbols-outlined icon-fill">shopping_bag</span>
+          </div>
+          <h2 class="mb-3 text-2xl font-black tracking-[-0.03em] text-[#121c2a]">Buyer safety tips</h2>
+          <p class="mb-6 text-sm leading-7 text-[#404944]">Before you confirm an order, make sure the item and delivery details match what you expected.</p>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined icon-fill mt-0.5 text-[18px] text-[#003527]">check_circle</span><span class="text-sm font-semibold leading-6 text-[#404944]">Check seller ratings and reviews before placing an order.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined icon-fill mt-0.5 text-[18px] text-[#003527]">check_circle</span><span class="text-sm font-semibold leading-6 text-[#404944]">Read product descriptions, condition notes, and delivery details carefully.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined icon-fill mt-0.5 text-[18px] text-[#003527]">check_circle</span><span class="text-sm font-semibold leading-6 text-[#404944]">Don't confirm delivery until you've received the correct item.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined icon-fill mt-0.5 text-[18px] text-[#003527]">check_circle</span><span class="text-sm font-semibold leading-6 text-[#404944]">Open a dispute if something goes wrong with the order.</span></li>
+          </ul>
+        </article>
+
+        <article class="rounded-[32px] border border-[#dbe6e1] bg-white p-7 shadow-[0_8px_38px_rgba(0,53,39,0.06)] md:p-8">
+          <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f0faf6] text-[#003527]">
+            <span class="material-symbols-outlined icon-fill">storefront</span>
+          </div>
+          <h2 class="mb-3 text-2xl font-black tracking-[-0.03em] text-[#121c2a]">Seller safety tips</h2>
+          <p class="mb-6 text-sm leading-7 text-[#404944]">Build trust by being clear, responsive, and accurate from listing to delivery confirmation.</p>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined icon-fill mt-0.5 text-[18px] text-[#003527]">check_circle</span><span class="text-sm font-semibold leading-6 text-[#404944]">Use accurate product photos and honest descriptions.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined icon-fill mt-0.5 text-[18px] text-[#003527]">check_circle</span><span class="text-sm font-semibold leading-6 text-[#404944]">Keep buyers updated about delivery or collection status.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined icon-fill mt-0.5 text-[18px] text-[#003527]">check_circle</span><span class="text-sm font-semibold leading-6 text-[#404944]">Only mark an order fulfilled once delivery or collection is complete.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined icon-fill mt-0.5 text-[18px] text-[#003527]">check_circle</span><span class="text-sm font-semibold leading-6 text-[#404944]">Respond to buyer questions quickly and professionally.</span></li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="mx-auto max-w-[1280px] px-4 pb-14 md:px-10 md:pb-16">
+        <div class="rounded-[32px] border border-[#c8ddd5] bg-[#f0faf6] p-8 md:p-12">
+          <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
+            <div class="lg:col-span-5">
+              <span class="material-symbols-outlined icon-fill mb-4 block text-[36px] text-[#003527]">support_agent</span>
+              <h2 class="mb-4 text-[28px] font-black leading-tight tracking-[-0.04em] text-[#121c2a] md:text-[40px]">
+                If something goes wrong, support can review the order.
+              </h2>
+              <p class="text-sm leading-7 text-[#404944] md:text-base">
+                Don't confirm receipt if the item hasn't arrived or there's a serious problem. You can raise a
+                dispute any time before the seller's payout is released.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 lg:col-span-7">
+              <div class="flex gap-4 rounded-[24px] border border-[#c8ddd5] bg-white p-5 shadow-[0_4px_18px_rgba(0,53,39,.04)]">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#f0faf6] text-[#003527]">
+                  <span class="material-symbols-outlined icon-fill">report</span>
+                </div>
+                <div>
+                  <h3 class="mb-1 font-black text-[#121c2a]">Raise the issue</h3>
+                  <p class="text-sm leading-7 text-[#404944]">Open a dispute from your order details page, or contact support.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-4 rounded-[24px] border border-[#c8ddd5] bg-white p-5 shadow-[0_4px_18px_rgba(0,53,39,.04)]">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#f0faf6] text-[#003527]">
+                  <span class="material-symbols-outlined icon-fill">fact_check</span>
+                </div>
+                <div>
+                  <h3 class="mb-1 font-black text-[#121c2a]">We review the details</h3>
+                  <p class="text-sm leading-7 text-[#404944]">Support checks order status, messages, delivery proof, and product details.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-4 rounded-[24px] border border-[#c8ddd5] bg-white p-5 shadow-[0_4px_18px_rgba(0,53,39,.04)]">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#f0faf6] text-[#003527]">
+                  <span class="material-symbols-outlined icon-fill">handshake</span>
+                </div>
+                <div>
+                  <h3 class="mb-1 font-black text-[#121c2a]">It's resolved fairly</h3>
+                  <p class="text-sm leading-7 text-[#404944]">Support guides the next step before any payout is released to the seller.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-[1280px] px-4 pb-12 md:px-10">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div class="flex flex-col items-start justify-between rounded-3xl border border-[#dbe6e1] bg-white p-6 shadow-sm">
+            <div>
+              <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#f0faf6] text-[#003527]">
+                <span class="material-symbols-outlined icon-fill text-[20px]">verified</span>
+              </div>
+              <h3 class="mb-2 text-xl font-black text-[#121c2a]">Explore verified businesses</h3>
+              <p class="mb-6 text-sm leading-6 text-[#404944]">Browse stores that have completed our full identity and background checks, so you can shop with confidence.</p>
+            </div>
+            <a href="/stores" class="inline-flex items-center gap-2 rounded-xl bg-[#003527] px-4 py-2.5 text-xs font-black text-white transition hover:bg-[#064e3b]">
+              Browse verified stores
+              <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+            </a>
+          </div>
+
+          <div class="flex flex-col items-start justify-between rounded-3xl border border-[#fee2e2] bg-[#fdf2f2] p-6 shadow-sm">
+            <div>
+              <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white text-red-700 shadow-sm">
+                <span class="material-symbols-outlined icon-fill text-[20px]">gavel</span>
+              </div>
+              <h3 class="mb-2 text-xl font-black text-[#121c2a]">Need to escalate a dispute?</h3>
+              <p class="mb-6 text-sm leading-6 text-[#404944]">Delivery delays, payout errors, or an unresolved problem with an order? Open a dispute and our team will help.</p>
+            </div>
+            <a href="/contact?topic=dispute" class="inline-flex items-center gap-2 rounded-xl bg-red-700 px-4 py-2.5 text-xs font-black text-white transition hover:bg-red-800">
+              Open a dispute request
+              <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-[1280px] px-4 pb-16 md:px-10">
+        <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+          <div class="lg:col-span-4">
+            <p class="mb-2 text-xs font-black uppercase tracking-[0.18em] text-[#003527]">Common questions</p>
+            <h2 class="mb-4 text-[26px] font-black leading-tight tracking-[-0.04em] text-[#121c2a] md:text-[36px]">
+              Trust &amp; Safety questions
+            </h2>
+            <p class="text-sm leading-7 text-[#404944]">
+              Quick answers about Buyer Protection, payout timing, collection, and support.
+            </p>
+          </div>
+
+          <div class="rounded-[28px] border border-[#dbe6e1] bg-white p-6 shadow-[0_8px_38px_rgba(0,53,39,0.05)] md:p-8 lg:col-span-8">
+            <div class="border-b border-[#dbe6e1]">
+              <button type="button" class="faq-button flex w-full items-center justify-between gap-4 py-5 text-left text-[15px] font-black text-[#121c2a]" aria-expanded="true" aria-controls="faq-1">
+                When does the seller receive payment?
+                <span class="faq-icon flex h-7 w-7 shrink-0 rotate-180 items-center justify-center rounded-full bg-[#003527] text-white transition">
+                  <span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>
+                </span>
+              </button>
+              <p id="faq-1" class="faq-answer pb-5 text-sm leading-7 text-[#404944]">
+                Payout is processed after you confirm delivery or collection, and once any dispute checks are complete.
+              </p>
+            </div>
+
+            <div class="border-b border-[#dbe6e1]">
+              <button type="button" class="faq-button flex w-full items-center justify-between gap-4 py-5 text-left text-[15px] font-black text-[#121c2a]" aria-expanded="false" aria-controls="faq-2">
+                What if my item doesn't arrive?
+                <span class="faq-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f6f9f7] text-[#003527] transition">
+                  <span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>
+                </span>
+              </button>
+              <p id="faq-2" class="faq-answer pb-5 text-sm leading-7 text-[#404944]" hidden>
+                Don't confirm delivery. Contact support or open a dispute from your order details page so we can review it.
+              </p>
+            </div>
+
+            <div class="border-b border-[#dbe6e1]">
+              <button type="button" class="faq-button flex w-full items-center justify-between gap-4 py-5 text-left text-[15px] font-black text-[#121c2a]" aria-expanded="false" aria-controls="faq-3">
+                Can I collect from a seller in person?
+                <span class="faq-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f6f9f7] text-[#003527] transition">
+                  <span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>
+                </span>
+              </button>
+              <p id="faq-3" class="faq-answer pb-5 text-sm leading-7 text-[#404944]" hidden>
+                Yes. Sellers can offer Click &amp; Collect, where you pay online and collect from an approved seller location.
+              </p>
+            </div>
+
+            <div class="border-b-0">
+              <button type="button" class="faq-button flex w-full items-center justify-between gap-4 py-5 text-left text-[15px] font-black text-[#121c2a]" aria-expanded="false" aria-controls="faq-4">
+                How does Open Market build trust?
+                <span class="faq-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f6f9f7] text-[#003527] transition">
+                  <span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>
+                </span>
+              </button>
+              <p id="faq-4" class="faq-answer pb-5 text-sm leading-7 text-[#404944]" hidden>
+                Through seller verification, protected payments, order tracking, dispute support, and reviews from real buyers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-auto bg-[#27313f] pb-20 text-[#eaf1ff] md:pb-0">
+      <div class="mx-auto grid max-w-[1280px] grid-cols-2 gap-8 px-4 py-12 md:grid-cols-4 md:px-10">
+        <div class="col-span-2 md:col-span-1">
+          <div class="mb-4 flex items-center gap-2 text-2xl font-bold">
+            <span class="material-symbols-outlined icon-fill">shopping_bag</span>
+            <span>Open Market</span>
+          </div>
+          <p class="max-w-xs text-sm text-[#eaf1ff]/80">
+            Empowering South African entrepreneurs and connecting them with local buyers through a secure, easy-to-use platform.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="mb-4 text-sm font-bold text-white">Shop &amp; Explore</h3>
+          <ul class="space-y-3">
+            <li><a href="/terms" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Terms of Service</a></li>
+            <li><a href="/privacy" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Privacy Policy</a></li>
+            <li><a href="/shipping" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Shipping Info</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="mb-4 text-sm font-bold text-white">For Sellers</h3>
+          <ul class="space-y-3">
+            <li><a href="/seller-policy" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Seller Guidelines</a></li>
+            <li><a href="/pricing" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Pricing &amp; Plans</a></li>
+            <li><a href="/seller-support" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Seller Support</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="mb-4 text-sm font-bold text-white">Support</h3>
+          <ul class="space-y-3">
+            <li><a href="/help-centre" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Help Centre</a></li>
+            <li><a href="/contact" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Contact Us</a></li>
+            <li><a href="/dispute-resolution" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Dispute Resolution</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 px-4 py-6 md:px-10">
+        <div class="mx-auto max-w-[1280px] text-sm text-[#eaf1ff]/70">
+          &copy; 2026 Open Market. Proudly South African.
+        </div>
+      </div>
+    </footer>
+
+    <nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-around border-t border-[#bfc9c3] bg-white px-4 py-2 shadow-lg md:hidden" aria-label="Mobile navigation">
+      <a href="/home" class="flex w-16 flex-col items-center justify-center rounded-xl p-2 text-xs font-semibold text-[#404944] transition">
+        <span class="material-symbols-outlined">home</span>
+        <span class="mt-1">Home</span>
+      </a>
+      <a href="/shop" class="flex w-16 flex-col items-center justify-center rounded-xl p-2 text-xs font-semibold text-[#404944] transition">
+        <span class="material-symbols-outlined">storefront</span>
+        <span class="mt-1">Shop</span>
+      </a>
+      <a href="/store" class="flex w-16 flex-col items-center justify-center rounded-xl p-2 text-xs font-semibold text-[#404944] transition">
+        <span class="material-symbols-outlined">store</span>
+        <span class="mt-1">Store</span>
+      </a>
+      <a href="/cart" class="flex w-16 flex-col items-center justify-center rounded-xl p-2 text-xs font-semibold text-[#404944] transition">
+        <span class="material-symbols-outlined icon-fill">shopping_bag</span>
+        <span class="mt-1">Cart</span>
+      </a>
+      <a href="/login" class="flex w-16 flex-col items-center justify-center rounded-xl p-2 text-xs font-semibold text-[#404944] transition">
+        <span class="material-symbols-outlined">person</span>
+        <span class="mt-1">Account</span>
+      </a>
+    </nav>
+
+    <script>
+      /* ---------- Mobile menu ---------- */
+      const menuToggle = document.querySelector("#menu-toggle");
+      const menuToggleIcon = document.querySelector("#menu-toggle-icon");
+      const mobileMenu = document.querySelector("#mobile-menu");
+
+      function setMenuOpen(open) {
+        mobileMenu.hidden = !open;
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        menuToggleIcon.textContent = open ? "close" : "menu";
+      }
+
+      menuToggle.addEventListener("click", () => {
+        setMenuOpen(mobileMenu.hidden);
+      });
+
+      // Close the menu when a link is tapped or on Escape
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => setMenuOpen(false));
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !mobileMenu.hidden) {
+          setMenuOpen(false);
+          menuToggle.focus();
+        }
+      });
+
+      /* ---------- FAQ accordion ---------- */
+      function setFaqOpen(button, shouldOpen) {
+        const answer = button.parentElement.querySelector(".faq-answer");
+        const icon = button.querySelector(".faq-icon");
+
+        button.setAttribute("aria-expanded", String(shouldOpen));
+        answer.hidden = !shouldOpen;
+        icon.classList.toggle("rotate-180", shouldOpen);
+        icon.classList.toggle("bg-[#003527]", shouldOpen);
+        icon.classList.toggle("text-white", shouldOpen);
+        icon.classList.toggle("bg-[#f6f9f7]", !shouldOpen);
+        icon.classList.toggle("text-[#003527]", !shouldOpen);
+      }
+
+      document.querySelectorAll(".faq-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const isOpen = button.getAttribute("aria-expanded") === "true";
+          document.querySelectorAll(".faq-button").forEach((otherButton) => {
+            setFaqOpen(otherButton, otherButton === button && !isOpen);
+          });
+        });
+      });
+
+      /* ---------- Buyer / Seller simulator ---------- */
+      const simulationData = {
+        buyer: [
+          { step: "01", title: "Checkout & secure pay", icon: "shopping_bag", desc: "You pay securely through Open Market. Your money goes into a protected escrow account, not straight to the seller.", badge: "Held safely" },
+          { step: "02", title: "Payment held in escrow", icon: "shield_locked", desc: "Open Market locks the full amount. The seller is notified that funds are secured and can begin fulfilment.", badge: "In escrow" },
+          { step: "03", title: "Delivery & inspection", icon: "local_shipping", desc: "The seller delivers your order or sets up a Click & Collect point. You inspect the item when it arrives.", badge: "Inspect order" },
+          { step: "04", title: "Confirm & release payment", icon: "verified", desc: "Once you're happy, confirm receipt in the app. The payment is released to the seller straight away.", badge: "Payout released" }
+        ],
+        seller: [
+          { step: "01", title: "New order received", icon: "notifications_active", desc: "A buyer checks out your listing. Open Market confirms their payment was authorised.", badge: "Verifying funds" },
+          { step: "02", title: "Payment held in escrow", icon: "lock_clock", desc: "Open Market holds the buyer's payment, so your payout is guaranteed. It's safe to start fulfilment now.", badge: "Payout guaranteed" },
+          { step: "03", title: "Dispatch & track", icon: "local_shipping", desc: "Ship with a tracked courier or arrange handover, then add your delivery proof to the order.", badge: "Fulfilment live" },
+          { step: "04", title: "Payout released", icon: "payments", desc: "The buyer confirms delivery. Escrow clears and the funds are paid to your account.", badge: "Payout released" }
+        ]
+      };
+
+      const buyerBtn = document.querySelector("#sim-buyer-btn");
+      const sellerBtn = document.querySelector("#sim-seller-btn");
+      const pipelineContainer = document.querySelector("#simulator-pipeline");
+      const activeTabClasses = "flex-1 rounded-lg bg-[#fed65b] px-4 py-2.5 text-xs font-black uppercase tracking-wider text-[#3a2e00] transition";
+      const inactiveTabClasses = "flex-1 rounded-lg px-4 py-2.5 text-xs font-black uppercase tracking-wider text-white transition hover:text-[#fed65b]";
+
+      function renderSimulation(type) {
+        const steps = simulationData[type];
+        pipelineContainer.innerHTML = steps.map((item, index) => `
+          <div class="timeline-item relative flex items-start gap-5 ${index === steps.length - 1 ? "pb-0" : "pb-7"}">
+            <div class="relative z-[1] flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#003527] text-sm font-black text-white shadow-[0_4px_14px_rgba(0,53,39,.3)]">
+              ${item.step}
+            </div>
+            <div class="flex-1 pt-1">
+              <div class="mb-1 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <h3 class="text-[15px] font-black text-[#121c2a]">${item.title}</h3>
+                  <span class="material-symbols-outlined icon-fill text-[18px] text-[#003527]">${item.icon}</span>
+                </div>
+                <span class="inline-block rounded-full border border-[#b7e4d1] bg-[#f0faf6] px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-[#003527]">
+                  ${item.badge}
+                </span>
+              </div>
+              <p class="text-sm leading-7 text-[#66736d]">${item.desc}</p>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      function selectTab(type) {
+        const isBuyer = type === "buyer";
+        buyerBtn.className = isBuyer ? activeTabClasses : inactiveTabClasses;
+        sellerBtn.className = isBuyer ? inactiveTabClasses : activeTabClasses;
+        buyerBtn.setAttribute("aria-selected", String(isBuyer));
+        sellerBtn.setAttribute("aria-selected", String(!isBuyer));
+        buyerBtn.tabIndex = isBuyer ? 0 : -1;
+        sellerBtn.tabIndex = isBuyer ? -1 : 0;
+        renderSimulation(type);
+      }
+
+      buyerBtn.addEventListener("click", () => selectTab("buyer"));
+      sellerBtn.addEventListener("click", () => selectTab("seller"));
+
+      // Arrow-key navigation between tabs (WAI-ARIA tablist pattern)
+      [buyerBtn, sellerBtn].forEach((tab) => {
+        tab.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+            e.preventDefault();
+            const next = tab === buyerBtn ? sellerBtn : buyerBtn;
+            selectTab(next === buyerBtn ? "buyer" : "seller");
+            next.focus();
+          }
+        });
+      });
+
+      // Default state
+      selectTab("buyer");
+    </script>
+  </body>
+</html>
