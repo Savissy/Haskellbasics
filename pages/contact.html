@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | Open Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0..1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #121c2a;
+        background: #f6f9f7;
+      }
+
+      .material-symbols-outlined {
+        font-family: "Material Symbols Outlined";
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: "liga";
+        -webkit-font-smoothing: antialiased;
+        font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+      }
+
+      .icon-fill {
+        font-variation-settings: "FILL" 1, "wght" 600, "GRAD" 0, "opsz" 24;
+      }
+
+      .contact-hero {
+        position: relative;
+        overflow: hidden;
+        background-color: #003527;
+        background-image:
+          radial-gradient(circle at top left, rgba(149, 211, 186, 0.22), transparent 38%),
+          radial-gradient(circle at 88% 16%, rgba(254, 214, 91, 0.16), transparent 32%),
+          radial-gradient(circle, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+        background-size: auto, auto, 28px 28px;
+      }
+
+      .form-input {
+        width: 100%;
+        border-radius: 16px;
+        border: 1px solid #dbe6e1;
+        background: #f8fbf9;
+        padding: 14px 16px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #121c2a;
+        outline: none;
+        transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+      }
+
+      .form-input:focus {
+        border-color: #003527;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(0, 53, 39, 0.1);
+      }
+
+      .form-input::placeholder {
+        color: #9aada7;
+      }
+
+      /* Error state for fields */
+      .form-input.field-error {
+        border-color: #dc2626;
+        background: #fef2f2;
+      }
+      .form-input.field-error:focus {
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+      }
+      .error-text {
+        margin-top: 6px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #dc2626;
+      }
+
+      .drag-over {
+        border-color: #003527 !important;
+        background-color: #f0faf6 !important;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      textarea:focus-visible {
+        outline: 3px solid rgba(0, 53, 39, 0.35);
+        outline-offset: 3px;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: 16px;
+        top: -60px;
+        z-index: 60;
+        border-radius: 12px;
+        background: #003527;
+        color: #fff;
+        padding: 12px 18px;
+        font-size: 14px;
+        font-weight: 800;
+        transition: top 0.18s ease;
+      }
+      .skip-link:focus {
+        top: 12px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="w-full bg-[#003527] px-4 py-2 text-center text-[#ffe088]">
+      <div class="mx-auto flex max-w-[1280px] items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">shield_locked</span>
+        <span class="text-sm font-semibold">
+          Buyer Protection on every order — payments are held until delivery is confirmed.
+        </span>
+      </div>
+    </div>
+
+    <header class="sticky top-0 z-40 border-b border-[#bfc9c3] bg-white">
+      <div class="mx-auto flex max-w-[1280px] items-center justify-between gap-6 px-4 py-4 md:px-10">
+        <a href="/" class="flex items-center gap-2 text-2xl font-bold text-[#003527]">
+          <span class="material-symbols-outlined icon-fill">shopping_bag</span>
+          <span>Open Market</span>
+        </a>
+
+        <nav class="hidden items-center gap-6 md:flex" aria-label="Primary navigation">
+          <a href="/shop" class="text-sm font-semibold text-[#404944] transition hover:text-[#003527]">Shop</a>
+          <a href="/stores" class="text-sm font-semibold text-[#404944] transition hover:text-[#003527]">Stores</a>
+          <a href="/#categories" class="text-sm font-semibold text-[#404944] transition hover:text-[#003527]">Categories</a>
+          <a href="/how-it-works" class="text-sm font-semibold text-[#404944] transition hover:text-[#003527]">How it works</a>
+          <a href="/become-seller" class="text-sm font-semibold text-[#404944] transition hover:text-[#003527]">Become a seller</a>
+          <a href="/help-centre" class="text-sm font-semibold text-[#404944] transition hover:text-[#003527]">Help</a>
+        </nav>
+
+        <div class="hidden flex-1 justify-end lg:flex">
+          <div class="relative w-full max-w-xs">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#404944]">search</span>
+            <label for="site-search" class="sr-only">Search products</label>
+            <input
+              id="site-search"
+              type="search"
+              placeholder="Search products..."
+              class="w-full rounded-full border border-[#bfc9c3] bg-[#f8f9ff] py-2 pl-10 pr-4 text-sm outline-none transition focus:border-[#003527] focus:ring-1 focus:ring-[#003527]"
+            />
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <a href="/cart" aria-label="Cart, 0 items" class="relative text-[#003527]">
+            <span class="material-symbols-outlined icon-fill">shopping_bag</span>
+            <span class="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#fed65b] text-[10px] font-bold text-[#745c00]">0</span>
+          </a>
+
+          <div class="hidden items-center gap-3 md:flex">
+            <a href="/login" class="text-sm font-semibold text-[#003527]">Sign In</a>
+            <a href="/register" class="rounded-xl bg-[#003527] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90">Join Now</a>
+          </div>
+
+          <button
+            type="button"
+            id="menu-toggle"
+            class="text-[#003527] md:hidden"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <span id="menu-toggle-icon" class="material-symbols-outlined">menu</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile menu panel -->
+      <div id="mobile-menu" class="border-t border-[#dbe6e1] bg-white md:hidden" hidden>
+        <nav class="mx-auto flex max-w-[1280px] flex-col gap-1 px-4 py-3" aria-label="Mobile primary navigation">
+          <a href="/shop" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#404944] transition hover:bg-[#f0faf6] hover:text-[#003527]">Shop</a>
+          <a href="/stores" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#404944] transition hover:bg-[#f0faf6] hover:text-[#003527]">Stores</a>
+          <a href="/#categories" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#404944] transition hover:bg-[#f0faf6] hover:text-[#003527]">Categories</a>
+          <a href="/how-it-works" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#404944] transition hover:bg-[#f0faf6] hover:text-[#003527]">How it works</a>
+          <a href="/become-seller" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#404944] transition hover:bg-[#f0faf6] hover:text-[#003527]">Become a seller</a>
+          <a href="/help-centre" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#404944] transition hover:bg-[#f0faf6] hover:text-[#003527]">Help</a>
+          <div class="mt-2 flex gap-2 border-t border-[#dbe6e1] pt-3">
+            <a href="/login" class="flex-1 rounded-xl border border-[#003527] px-4 py-2.5 text-center text-sm font-semibold text-[#003527]">Sign In</a>
+            <a href="/register" class="flex-1 rounded-xl bg-[#003527] px-4 py-2.5 text-center text-sm font-semibold text-white">Join Now</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="bg-[#f6f9f7]">
+      <section class="contact-hero">
+        <div class="mx-auto max-w-[1280px] px-4 py-14 md:px-10 md:py-20">
+          <div class="mx-auto max-w-3xl text-center">
+            <span class="inline-flex items-center gap-2 rounded-full border border-[#fed65b]/30 bg-[#fed65b]/15 px-4 py-2 text-xs font-black uppercase tracking-wide text-[#fed65b]">
+              <span class="material-symbols-outlined icon-fill text-[15px]">contact_support</span>
+              Contact Open Market
+            </span>
+
+            <h1 class="my-5 text-[40px] font-black leading-[1.02] tracking-[-0.055em] text-white md:text-[66px]">
+              Need help? We're here to support you.
+            </h1>
+
+            <p class="mx-auto max-w-[620px] text-[17px] leading-8 text-white/70">
+              Get help with orders, payments, delivery, collections, disputes, seller registration, or your account.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-[1280px] px-4 py-8 md:px-10">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div class="flex flex-col justify-between rounded-[24px] border border-[#dbe6e1] bg-white p-5 shadow-[0_6px_24px_rgba(0,53,39,0.04)]">
+            <div>
+              <span class="material-symbols-outlined icon-fill mb-3 block text-[30px] text-[#003527]">support_agent</span>
+              <h2 class="mb-1 font-black text-[#121c2a]">General support</h2>
+              <p class="mb-4 text-sm leading-6 text-[#404944]">Reach our support team by email or on WhatsApp.</p>
+            </div>
+            <div class="flex flex-col gap-2 pt-2">
+              <a href="mailto:support@openmarket.co.za" class="inline-flex items-center justify-between rounded-xl border border-[#dbe6e1] bg-[#f8fbf9] px-4 py-2.5 text-xs font-black text-[#003527] transition hover:border-[#95d3ba]">
+                <span class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">mail</span>support@openmarket.co.za</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+              <a href="https://wa.me/27123456789" target="_blank" rel="noopener" class="inline-flex items-center justify-between rounded-xl border border-[#bbf7d0] bg-[#e6f7ed] px-4 py-2.5 text-xs font-black text-[#15803d] transition hover:bg-[#dcfce7]">
+                <span class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">chat</span>Chat on WhatsApp</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+
+          <a href="/my-orders" class="group flex flex-col justify-between rounded-[24px] border border-[#dbe6e1] bg-white p-5 shadow-[0_6px_24px_rgba(0,53,39,0.04)] transition hover:-translate-y-1 hover:border-[#95d3ba]">
+            <div>
+              <span class="material-symbols-outlined icon-fill mb-3 block text-[30px] text-[#003527]">shopping_bag</span>
+              <h2 class="mb-1 font-black text-[#121c2a]">Order help</h2>
+              <p class="mb-4 text-sm leading-6 text-[#404944]">Need help with delivery, collection, confirmation, or a dispute?</p>
+            </div>
+            <span class="mt-auto inline-flex items-center gap-2 text-sm font-black text-[#003527]">
+              View your orders
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </span>
+          </a>
+
+          <a href="/become-seller" class="group flex flex-col justify-between rounded-[24px] border border-[#dbe6e1] bg-white p-5 shadow-[0_6px_24px_rgba(0,53,39,0.04)] transition hover:-translate-y-1 hover:border-[#95d3ba]">
+            <div>
+              <span class="material-symbols-outlined icon-fill mb-3 block text-[30px] text-[#003527]">storefront</span>
+              <h2 class="mb-1 font-black text-[#121c2a]">Seller support</h2>
+              <p class="mb-4 text-sm leading-6 text-[#404944]">Need help opening your store, listing products, or understanding payouts?</p>
+            </div>
+            <span class="mt-auto inline-flex items-center gap-2 text-sm font-black text-[#003527]">
+              Become a seller
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </span>
+          </a>
+        </div>
+      </section>
+
+      <section class="mx-auto grid max-w-[1280px] grid-cols-1 gap-8 px-4 pb-16 md:px-10 lg:grid-cols-12">
+        <section class="lg:col-span-8">
+          <div class="rounded-[32px] border border-[#dbe6e1] bg-white p-6 shadow-[0_8px_38px_rgba(0,53,39,0.06)] md:p-8">
+            <div class="mb-7">
+              <p class="mb-2 text-xs font-black uppercase tracking-[0.18em] text-[#003527]">Send a message</p>
+              <h2 class="mb-3 text-[28px] font-black leading-tight tracking-[-0.04em] text-[#121c2a] md:text-[38px]">
+                Tell us what you need help with
+              </h2>
+              <p class="max-w-2xl text-sm leading-7 text-[#404944]">
+                Share a few details and the support team will get back to you. For order issues, include your order number.
+              </p>
+            </div>
+
+            <div id="contact-confirmation" class="rounded-[24px] border border-[#b7e4d1] bg-[#f0faf6] p-6" role="status" aria-live="polite" hidden>
+              <span class="material-symbols-outlined icon-fill mb-3 block text-[34px] text-[#003527]">check_circle</span>
+              <h3 class="mb-2 text-xl font-black text-[#121c2a]">Message received</h3>
+              <p class="text-sm leading-7 text-[#404944]">
+                Thanks — we've logged your message and the support team will reply during support hours.
+              </p>
+              <button
+                type="button"
+                id="send-another"
+                class="mt-5 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#003527] px-5 py-3 text-sm font-black text-white transition hover:bg-[#064e3b]"
+              >
+                Send another message
+              </button>
+            </div>
+
+            <!-- Summary of errors, announced to screen readers on submit -->
+            <div id="form-error-summary" class="mb-5 rounded-2xl border border-red-200 bg-red-50 p-4" role="alert" hidden>
+              <p class="flex items-center gap-2 text-sm font-black text-red-700">
+                <span class="material-symbols-outlined icon-fill text-[18px]">error</span>
+                Please fix the highlighted fields below.
+              </p>
+            </div>
+
+            <form id="contact-form" class="grid gap-5" novalidate>
+              <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                <div>
+                  <label for="name" class="mb-2 block text-sm font-black text-[#121c2a]">Full name</label>
+                  <input id="name" name="name" type="text" autocomplete="name" placeholder="Enter your name" class="form-input" aria-describedby="name-error" />
+                  <p id="name-error" class="error-text" hidden></p>
+                </div>
+
+                <div>
+                  <label for="email" class="mb-2 block text-sm font-black text-[#121c2a]">Email address</label>
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" class="form-input" aria-describedby="email-error" />
+                  <p id="email-error" class="error-text" hidden></p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                <div>
+                  <label for="supportType" class="mb-2 block text-sm font-black text-[#121c2a]">Support type</label>
+                  <select id="supportType" name="supportType" class="form-input" aria-describedby="supportType-error">
+                    <option value="">Select a topic</option>
+                    <option value="order">Order help</option>
+                    <option value="payment">Payment issue</option>
+                    <option value="delivery">Delivery or collection</option>
+                    <option value="seller">Seller support</option>
+                    <option value="account">Account support</option>
+                    <option value="dispute">Dispute or refund</option>
+                  </select>
+                  <p id="supportType-error" class="error-text" hidden></p>
+                </div>
+
+                <div>
+                  <label id="orderNumberLabel" for="orderNumber" class="mb-2 block text-sm font-black text-[#121c2a]">Order number <span class="text-xs font-normal text-[#66736d]">(optional)</span></label>
+                  <input id="orderNumber" name="orderNumber" type="text" placeholder="Example: OM-1024" class="form-input" aria-describedby="orderNumber-error" />
+                  <p id="orderNumber-error" class="error-text" hidden></p>
+                </div>
+              </div>
+
+              <div id="deflection-center" class="rounded-2xl border border-[#fed65b] bg-[#fffbeb] p-4" hidden>
+                <div class="mb-3 flex items-center gap-2 text-[#745c00]">
+                  <span class="material-symbols-outlined icon-fill text-[20px]">lightbulb</span>
+                  <h4 class="text-sm font-black">These articles might solve it faster</h4>
+                </div>
+                <div id="deflection-articles" class="grid gap-2 sm:grid-cols-2"></div>
+              </div>
+
+              <div>
+                <label for="subject" class="mb-2 block text-sm font-black text-[#121c2a]">Subject</label>
+                <input id="subject" name="subject" type="text" placeholder="Briefly describe the issue" class="form-input" aria-describedby="subject-error" />
+                <p id="subject-error" class="error-text" hidden></p>
+              </div>
+
+              <div>
+                <label for="message" class="mb-2 block text-sm font-black text-[#121c2a]">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="6"
+                  placeholder="Tell us what happened and what you need help with..."
+                  class="form-input resize-none"
+                  aria-describedby="message-error"
+                ></textarea>
+                <p id="message-error" class="error-text" hidden></p>
+              </div>
+
+              <div>
+                <label class="mb-2 block text-sm font-black text-[#121c2a]">Attachments <span class="text-xs font-normal text-[#66736d]">(optional)</span></label>
+                <div id="dropzone" class="relative cursor-pointer rounded-2xl border-2 border-dashed border-[#dbe6e1] bg-[#f8fbf9] p-6 text-center transition hover:border-[#95d3ba]">
+                  <input type="file" id="fileInput" multiple class="absolute inset-0 cursor-pointer opacity-0" accept="image/*,application/pdf" aria-label="Add attachments" />
+                  <span class="material-symbols-outlined icon-fill mb-2 text-[32px] text-[#404944]">cloud_upload</span>
+                  <p class="text-sm font-bold text-[#121c2a]">Drag and drop files here, or <span class="text-[#003527] underline">browse</span></p>
+                  <p class="mt-1 text-xs text-[#66736d]">PNG, JPG, or PDF — up to 5&nbsp;MB total</p>
+                </div>
+                <p id="file-error" class="error-text" hidden></p>
+                <div id="fileList" class="mt-3 flex flex-wrap gap-2"></div>
+              </div>
+
+              <button
+                type="submit"
+                class="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#003527] px-6 py-4 text-sm font-black text-white shadow-[0_8px_24px_rgba(0,53,39,.22)] transition hover:bg-[#064e3b] sm:w-fit"
+              >
+                Send message
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <aside class="lg:col-span-4">
+          <div class="sticky top-28 space-y-5">
+            <div class="rounded-[28px] border border-[#dbe6e1] bg-white p-6 shadow-[0_8px_38px_rgba(0,53,39,0.05)]">
+              <span class="material-symbols-outlined icon-fill mb-4 block text-[34px] text-[#003527]">schedule</span>
+              <h2 class="mb-2 text-xl font-black text-[#121c2a]">Support hours</h2>
+              <div class="space-y-3 text-sm leading-6 text-[#404944]">
+                <p><strong class="text-[#121c2a]">Monday – Friday:</strong> 08:00 – 17:00</p>
+                <p><strong class="text-[#121c2a]">Saturday:</strong> 09:00 – 13:00</p>
+                <p><strong class="text-[#121c2a]">Sunday:</strong> Closed</p>
+              </div>
+            </div>
+
+            <div class="rounded-[28px] bg-[#003527] p-6 text-white shadow-[0_18px_44px_rgba(0,53,39,.16)]">
+              <span class="material-symbols-outlined icon-fill mb-4 block text-[30px] text-[#fed65b]">shield_locked</span>
+              <h2 class="mb-2 text-xl font-black">Order or payment issue?</h2>
+              <p class="text-sm leading-7 text-white/70">
+                Don't confirm delivery if there's a problem with your order. Contact support or open a dispute before the payout is released.
+              </p>
+              <a href="/help-centre" class="mt-5 inline-flex items-center gap-2 text-sm font-black text-[#fed65b] hover:underline">
+                Visit Help Centre
+                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </a>
+            </div>
+
+            <div class="rounded-[28px] border border-[#dbe6e1] bg-white p-6 shadow-[0_8px_38px_rgba(0,53,39,0.05)]">
+              <h2 class="mb-4 text-xl font-black text-[#121c2a]">Popular support topics</h2>
+
+              <div class="space-y-3">
+                <a href="/trust-safety" class="flex gap-3 rounded-2xl border border-[#dbe6e1] bg-[#f8fbf9] p-4 transition hover:border-[#95d3ba] hover:bg-[#f0faf6]">
+                  <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#003527]">
+                    <span class="material-symbols-outlined icon-fill text-[20px]">shield_locked</span>
+                  </div>
+                  <div>
+                    <h3 class="mb-1 text-sm font-black text-[#121c2a]">Buyer Protection</h3>
+                    <p class="text-xs leading-5 text-[#66736d]">How protected payments work before and after delivery confirmation.</p>
+                  </div>
+                </a>
+
+                <a href="/how-it-works" class="flex gap-3 rounded-2xl border border-[#dbe6e1] bg-[#f8fbf9] p-4 transition hover:border-[#95d3ba] hover:bg-[#f0faf6]">
+                  <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#003527]">
+                    <span class="material-symbols-outlined icon-fill text-[20px]">local_shipping</span>
+                  </div>
+                  <div>
+                    <h3 class="mb-1 text-sm font-black text-[#121c2a]">Delivery &amp; collection</h3>
+                    <p class="text-xs leading-5 text-[#66736d]">Delivery tracking, Click &amp; Collect, and confirmation steps.</p>
+                  </div>
+                </a>
+
+                <a href="/help-centre" class="flex gap-3 rounded-2xl border border-[#dbe6e1] bg-[#f8fbf9] p-4 transition hover:border-[#95d3ba] hover:bg-[#f0faf6]">
+                  <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#003527]">
+                    <span class="material-symbols-outlined icon-fill text-[20px]">help</span>
+                  </div>
+                  <div>
+                    <h3 class="mb-1 text-sm font-black text-[#121c2a]">Help articles</h3>
+                    <p class="text-xs leading-5 text-[#66736d]">Answers for buying, selling, payments, disputes, and your account.</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="mt-auto bg-[#27313f] pb-20 text-[#eaf1ff] md:pb-0">
+      <div class="mx-auto grid max-w-[1280px] grid-cols-2 gap-8 px-4 py-12 md:grid-cols-4 md:px-10">
+        <div class="col-span-2 md:col-span-1">
+          <div class="mb-4 flex items-center gap-2 text-2xl font-bold">
+            <span class="material-symbols-outlined icon-fill">shopping_bag</span>
+            <span>Open Market</span>
+          </div>
+          <p class="max-w-xs text-sm text-[#eaf1ff]/80">
+            Empowering South African entrepreneurs and connecting them with local buyers through a secure, easy-to-use platform.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="mb-4 text-sm font-bold text-white">Shop &amp; Explore</h3>
+          <ul class="space-y-3">
+            <li><a href="/terms" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Terms of Service</a></li>
+            <li><a href="/privacy" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Privacy Policy</a></li>
+            <li><a href="/shipping" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Shipping Info</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="mb-4 text-sm font-bold text-white">For Sellers</h3>
+          <ul class="space-y-3">
+            <li><a href="/seller-policy" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Seller Guidelines</a></li>
+            <li><a href="/pricing" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Pricing &amp; Plans</a></li>
+            <li><a href="/seller-support" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Seller Support</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="mb-4 text-sm font-bold text-white">Support</h3>
+          <ul class="space-y-3">
+            <li><a href="/help-centre" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Help Centre</a></li>
+            <li><a href="/contact" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Contact Us</a></li>
+            <li><a href="/dispute-resolution" class="text-sm text-[#eaf1ff]/80 transition hover:text-[#ffe088]">Dispute Resolution</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 px-4 py-6 md:px-10">
+        <div class="mx-auto max-w-[1280px] text-sm text-[#eaf1ff]/70">
+          &copy; 2026 Open Market. Proudly South African.
+        </div>
+      </div>
+    </footer>
+
+    <nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-around border-t border-[#bfc9c3] bg-white px-4 py-2 shadow-lg md:hidden" aria-label="Mobile navigation">
+      <a href="/home" class="flex w-16 flex-col items-center justify-center rounded-xl p-2 text-xs font-semibold text-[#404944] transition">
+        <span class="material-symbols-outlined">home</span>
+        <span class="mt-1">Home</span>
+      </a>
+      <a href="/shop" class="flex w-16 flex-col items-center justify-center rounded-xl p-2 text-xs font-semibold text-[#404944] transition">
+        <span class="material-symbols-outlined">storefront</span>
+        <span class="mt-1">Shop</span>
+      </a>
+      <a href="/store" class="flex w-16 flex-col items-center justify-center rounded-xl p-2 text-xs font-semibold text-[#404944] transition">
+        <span class="material-symbols-outlined">store</span>
+        <span class="mt-1">Store</span>
+      </a>
+      <a href="/cart" class="flex w-16 flex-col items-center justify-center rounded-xl p-2 text-xs font-semibold text-[#404944] transition">
+        <span class="material-symbols-outlined icon-fill">shopping_bag</span>
+        <span class="mt-1">Cart</span>
+      </a>
+      <a href="/login" class="flex w-16 flex-col items-center justify-center rounded-xl p-2 text-xs font-semibold text-[#404944] transition">
+        <span class="material-symbols-outlined">person</span>
+        <span class="mt-1">Account</span>
+      </a>
+    </nav>
+
+    <script>
+      /* ---------- Mobile menu ---------- */
+      const menuToggle = document.querySelector("#menu-toggle");
+      const menuToggleIcon = document.querySelector("#menu-toggle-icon");
+      const mobileMenu = document.querySelector("#mobile-menu");
+
+      function setMenuOpen(open) {
+        mobileMenu.hidden = !open;
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        menuToggleIcon.textContent = open ? "close" : "menu";
+      }
+      menuToggle.addEventListener("click", () => setMenuOpen(mobileMenu.hidden));
+      mobileMenu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenuOpen(false)));
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !mobileMenu.hidden) {
+          setMenuOpen(false);
+          menuToggle.focus();
+        }
+      });
+
+      /* ---------- Contact form ---------- */
+      const form = document.querySelector("#contact-form");
+      const confirmation = document.querySelector("#contact-confirmation");
+      const sendAnother = document.querySelector("#send-another");
+      const errorSummary = document.querySelector("#form-error-summary");
+
+      const supportTypeSelect = document.querySelector("#supportType");
+      const orderNumberLabel = document.querySelector("#orderNumberLabel");
+      const orderNumberInput = document.querySelector("#orderNumber");
+
+      const deflectionCenter = document.querySelector("#deflection-center");
+      const deflectionArticles = document.querySelector("#deflection-articles");
+
+      const dropzone = document.querySelector("#dropzone");
+      const fileInput = document.querySelector("#fileInput");
+      const fileList = document.querySelector("#fileList");
+      const fileError = document.querySelector("#file-error");
+
+      const MAX_TOTAL_BYTES = 5 * 1024 * 1024; // 5 MB
+      const TOPICS_NEEDING_ORDER = ["order", "payment", "dispute"];
+
+      // Topics that require an order number
+      const articleDatabase = {
+        order: [
+          { title: "Track your order status", url: "/help/track-order" },
+          { title: "What to do if your item hasn't arrived", url: "/help/delayed-delivery" }
+        ],
+        payment: [
+          { title: "Accepted payment methods", url: "/help/payment-methods" },
+          { title: "How escrow and payouts work", url: "/help/escrow-payouts" }
+        ],
+        delivery: [
+          { title: "How Click & Collect works", url: "/help/click-collect" },
+          { title: "Arranging courier delivery", url: "/help/shipping-info" }
+        ],
+        dispute: [
+          { title: "When to open a dispute", url: "/help/open-dispute" },
+          { title: "Refund windows and guarantees", url: "/help/refunds" }
+        ]
+      };
+
+      /* ----- Error helpers ----- */
+      function showError(fieldId, message) {
+        const field = document.querySelector("#" + fieldId);
+        const errorEl = document.querySelector("#" + fieldId + "-error");
+        field.classList.add("field-error");
+        field.setAttribute("aria-invalid", "true");
+        errorEl.innerHTML = '<span class="material-symbols-outlined icon-fill text-[14px]">error</span>' + message;
+        errorEl.hidden = false;
+      }
+      function clearError(fieldId) {
+        const field = document.querySelector("#" + fieldId);
+        const errorEl = document.querySelector("#" + fieldId + "-error");
+        field.classList.remove("field-error");
+        field.removeAttribute("aria-invalid");
+        errorEl.hidden = true;
+        errorEl.textContent = "";
+      }
+
+      function orderNumberRequired() {
+        return TOPICS_NEEDING_ORDER.includes(supportTypeSelect.value);
+      }
+
+      /* ----- Conditional "order number required" + article deflection ----- */
+      supportTypeSelect.addEventListener("change", (e) => {
+        const value = e.target.value;
+        clearError("supportType");
+
+        if (orderNumberRequired()) {
+          orderNumberLabel.innerHTML = 'Order number <span class="text-xs font-black text-red-600">(required)</span>';
+          orderNumberInput.placeholder = "Required — e.g. OM-1024";
+        } else {
+          orderNumberLabel.innerHTML = 'Order number <span class="text-xs font-normal text-[#66736d]">(optional)</span>';
+          orderNumberInput.placeholder = "Example: OM-1024";
+          clearError("orderNumber");
+        }
+
+        if (articleDatabase[value]) {
+          deflectionArticles.innerHTML = articleDatabase[value]
+            .map((article) => `
+              <a href="${article.url}" class="flex items-center justify-between gap-2 rounded-xl border border-[#fed65b]/40 bg-white p-3 text-xs font-bold text-[#745c00] transition hover:bg-[#fffdf5]">
+                <span>${article.title}</span>
+                <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+              </a>
+            `).join("");
+          deflectionCenter.hidden = false;
+        } else {
+          deflectionCenter.hidden = true;
+          deflectionArticles.innerHTML = "";
+        }
+      });
+
+      /* ----- Attachments: enforce 5MB, show size, allow remove ----- */
+      let attachedFiles = [];
+
+      function formatSize(bytes) {
+        if (bytes < 1024) return bytes + " B";
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(0) + " KB";
+        return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+      }
+
+      function totalSize() {
+        return attachedFiles.reduce((sum, f) => sum + f.size, 0);
+      }
+
+      function renderFiles() {
+        fileList.innerHTML = "";
+        attachedFiles.forEach((file, index) => {
+          const badge = document.createElement("span");
+          badge.className = "inline-flex items-center gap-1.5 rounded-full bg-[#003527] py-1 pl-3 pr-1.5 text-xs font-semibold text-white";
+          badge.innerHTML =
+            '<span class="material-symbols-outlined text-[12px]">description</span>' +
+            '<span class="max-w-[160px] truncate">' + file.name + "</span>" +
+            '<span class="text-white/60">' + formatSize(file.size) + "</span>";
+
+          const removeBtn = document.createElement("button");
+          removeBtn.type = "button";
+          removeBtn.className = "flex h-5 w-5 items-center justify-center rounded-full hover:bg-white/20";
+          removeBtn.setAttribute("aria-label", "Remove " + file.name);
+          removeBtn.innerHTML = '<span class="material-symbols-outlined text-[14px]">close</span>';
+          removeBtn.addEventListener("click", () => {
+            attachedFiles.splice(index, 1);
+            validateFiles();
+            renderFiles();
+          });
+
+          badge.appendChild(removeBtn);
+          fileList.appendChild(badge);
+        });
+      }
+
+      function validateFiles() {
+        if (totalSize() > MAX_TOTAL_BYTES) {
+          fileError.innerHTML =
+            '<span class="material-symbols-outlined icon-fill text-[14px]">error</span>Attachments total ' +
+            formatSize(totalSize()) + ". Please remove some — the limit is 5 MB.";
+          fileError.hidden = false;
+          return false;
+        }
+        fileError.hidden = true;
+        return true;
+      }
+
+      function addFiles(newList) {
+        Array.from(newList).forEach((file) => {
+          const duplicate = attachedFiles.some((f) => f.name === file.name && f.size === file.size);
+          if (!duplicate) attachedFiles.push(file);
+        });
+        validateFiles();
+        renderFiles();
+        fileInput.value = ""; // allow re-selecting the same file later
+      }
+
+      ["dragenter", "dragover"].forEach((evt) =>
+        dropzone.addEventListener(evt, (e) => {
+          e.preventDefault();
+          dropzone.classList.add("drag-over");
+        })
+      );
+      ["dragleave", "drop"].forEach((evt) =>
+        dropzone.addEventListener(evt, (e) => {
+          e.preventDefault();
+          dropzone.classList.remove("drag-over");
+        })
+      );
+      dropzone.addEventListener("drop", (e) => addFiles(e.dataTransfer.files));
+      fileInput.addEventListener("change", () => addFiles(fileInput.files));
+
+      /* ----- Full validation on submit ----- */
+      function validateForm() {
+        let firstInvalid = null;
+        const fail = (id, msg) => {
+          showError(id, msg);
+          if (!firstInvalid) firstInvalid = document.querySelector("#" + id);
+        };
+
+        const name = document.querySelector("#name");
+        const email = document.querySelector("#email");
+        const subject = document.querySelector("#subject");
+        const message = document.querySelector("#message");
+
+        ["name", "email", "supportType", "subject", "message", "orderNumber"].forEach(clearError);
+
+        if (!name.value.trim()) fail("name", "Please enter your name.");
+
+        const emailValue = email.value.trim();
+        if (!emailValue) {
+          fail("email", "Please enter your email address.");
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+          fail("email", "Enter a valid email, like you@example.com.");
+        }
+
+        if (!supportTypeSelect.value) fail("supportType", "Please choose a topic.");
+
+        if (orderNumberRequired() && !orderNumberInput.value.trim()) {
+          fail("orderNumber", "An order number is required for this topic.");
+        }
+
+        if (!subject.value.trim()) fail("subject", "Please add a subject.");
+        if (!message.value.trim()) fail("message", "Please tell us what you need help with.");
+
+        const filesOk = validateFiles();
+
+        if (firstInvalid || !filesOk) {
+          errorSummary.hidden = false;
+          if (firstInvalid) firstInvalid.focus();
+          return false;
+        }
+        errorSummary.hidden = true;
+        return true;
+      }
+
+      // Clear a field's error as soon as the user starts fixing it
+      ["name", "email", "subject", "message", "orderNumber"].forEach((id) => {
+        document.querySelector("#" + id).addEventListener("input", () => clearError(id));
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!validateForm()) return;
+        form.hidden = true;
+        deflectionCenter.hidden = true;
+        errorSummary.hidden = true;
+        confirmation.hidden = false;
+        confirmation.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+
+      sendAnother.addEventListener("click", () => {
+        confirmation.hidden = true;
+        form.hidden = false;
+        form.reset();
+        attachedFiles = [];
+        renderFiles();
+        fileError.hidden = true;
+        ["name", "email", "supportType", "subject", "message", "orderNumber"].forEach(clearError);
+        orderNumberLabel.innerHTML = 'Order number <span class="text-xs font-normal text-[#66736d]">(optional)</span>';
+        orderNumberInput.placeholder = "Example: OM-1024";
+        form.querySelector("#name").focus();
+      });
+    </script>
+  </body>
+</html>
