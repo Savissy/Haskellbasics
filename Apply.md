@@ -4,3 +4,6 @@
 [5/21, 4:11 PM] Mr Sam CWAY: course is industrial chemistry
 [5/21, 4:12 PM] Mr Sam CWAY: master in public health (MPH)
 [5/21, 4:12 PM] Mr Sam CWAY: role: quality assurance supervisor
+
+
+https://jobs.smartrecruiters.com/Deloitte6/744000135299304-deloitte-cyber-academy?utm_source=MyJobMag
