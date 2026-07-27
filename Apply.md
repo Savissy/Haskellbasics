@@ -7,3 +7,6 @@
 
 
 https://jobs.smartrecruiters.com/Deloitte6/744000135299304-deloitte-cyber-academy?utm_source=MyJobMag
+
+
+https://forms.gle/iDq8J14nWyjFndi26
